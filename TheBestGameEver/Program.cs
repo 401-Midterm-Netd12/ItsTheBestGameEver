@@ -9,6 +9,7 @@ namespace TheBestGameEver
 {
   class Program
   {
+    static string URL = "https://pokeapi.co/api/v2/pokemon/";
         static void Main(string[] args)
         {
             start_get();
@@ -18,7 +19,7 @@ namespace TheBestGameEver
     // Answer provided on: Jun 27 '17 at 8:51
     private static void start_get()
     {
-      HttpWebRequest WebReq = (HttpWebRequest)WebRequest.Create(string.Format("https://pokeapi.co/api/v2/pokemon/"));
+      HttpWebRequest WebReq = (HttpWebRequest)WebRequest.Create(string.Format(URL));
       WebReq.Method = "GET";
       HttpWebResponse WebResp = (HttpWebResponse)WebReq.GetResponse();
       Console.WriteLine(WebResp.StatusCode);
