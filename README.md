@@ -4,12 +4,16 @@ A console application that acts as a client for our Custom Character API.
 ## Authors:
 * Matthew Petersen, David Dicken, Alan Hung, Ameilia Valdes, Jordan Kidwell
 
+### Domain Model:
+
 ### Getting Started
 * Open Visual Studio
 * Clone [ItsTheBestGameEver](https://github.com/401-Midterm-Netd12/ItsTheBestGameEver)
 * Click Run
 
 ### Example:
+
+### Object Explanation:
 
 ## Resources:
 * Call to an api: https://stackoverflow.com/questions/44775645/how-to-get-data-from-json-api-with-c-sharp-using-httpwebrequest

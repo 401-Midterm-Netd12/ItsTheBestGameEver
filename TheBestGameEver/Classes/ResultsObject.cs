@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TheBestGameEver.Classes
 {
-    public class Results
+    public class ResultsObject
     {
         public string Name { get; set; }
         public string Url { get; set; }
