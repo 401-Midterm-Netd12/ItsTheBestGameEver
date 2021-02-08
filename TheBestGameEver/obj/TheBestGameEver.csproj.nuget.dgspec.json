@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\zanyg\\Source\\Repos\\ItsTheBestGameEver\\TheBestGameEver\\TheBestGameEver.csproj": {}
+    "C:\\Users\\zanyg\\source\\repos\\ItsTheBestGameEver\\TheBestGameEver\\TheBestGameEver.csproj": {}
   },
   "projects": {
-    "C:\\Users\\zanyg\\Source\\Repos\\ItsTheBestGameEver\\TheBestGameEver\\TheBestGameEver.csproj": {
+    "C:\\Users\\zanyg\\source\\repos\\ItsTheBestGameEver\\TheBestGameEver\\TheBestGameEver.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\zanyg\\Source\\Repos\\ItsTheBestGameEver\\TheBestGameEver\\TheBestGameEver.csproj",
+        "projectUniqueName": "C:\\Users\\zanyg\\source\\repos\\ItsTheBestGameEver\\TheBestGameEver\\TheBestGameEver.csproj",
         "projectName": "TheBestGameEver",
-        "projectPath": "C:\\Users\\zanyg\\Source\\Repos\\ItsTheBestGameEver\\TheBestGameEver\\TheBestGameEver.csproj",
+        "projectPath": "C:\\Users\\zanyg\\source\\repos\\ItsTheBestGameEver\\TheBestGameEver\\TheBestGameEver.csproj",
         "packagesPath": "C:\\Users\\zanyg\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\zanyg\\Source\\Repos\\ItsTheBestGameEver\\TheBestGameEver\\obj\\",
+        "outputPath": "C:\\Users\\zanyg\\source\\repos\\ItsTheBestGameEver\\TheBestGameEver\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\zanyg\\AppData\\Roaming\\NuGet\\NuGet.Config",

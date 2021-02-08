@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "cH4V0+qBde8zPcukkRKBegG42StNEDnUQF1qHiHhgSg/cDieBotGyJWXWQgxtycl9e88BHsOJvc79zPxaE/wXQ==",
+  "dgSpecHash": "O68vvU9c6Od8GsLS/W5Lh3BIkXq27rRDsSyt1LLKBhYvze0SjnXESXvHNd3IsTaP//t+5cRi7aGtf9xHWEOgIA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\zanyg\\Source\\Repos\\ItsTheBestGameEver\\TheBestGameEver\\TheBestGameEver.csproj",
+  "projectFilePath": "C:\\Users\\zanyg\\source\\repos\\ItsTheBestGameEver\\TheBestGameEver\\TheBestGameEver.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\zanyg\\.nuget\\packages\\microsoft.aspnet.webapi.client\\5.2.7\\microsoft.aspnet.webapi.client.5.2.7.nupkg.sha512",
     "C:\\Users\\zanyg\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
