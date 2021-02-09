@@ -18,15 +18,61 @@ namespace TheBestGameEver
     static HttpWebResponse WebResp;
     static void Main(string[] args)
     {
-      start_get();
-      RunAsync();
-      start_get();
-
+      read();
+      create();
+      read();
+      delete();
+      read();
+      update();
+      read();
     }
+
+    static async void read()
+    {
+      await start_get();
+    }
+
+    static async void create()
+    {
+      client.BaseAddress = new Uri(URL);
+      client.DefaultRequestHeaders.Accept.Clear();
+      client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+      AmenitiesObject amenity = new AmenitiesObject
+      {
+        Item = "Balcony"
+      };
+      var url = await CreateProductAsync(amenity);
+      Console.WriteLine($"Created at {url}");
+    }
+
+    static async void delete()
+    {
+      Console.WriteLine("Starting delete method");
+      string DelResp = await DeleteProduct(6);
+    }
+
+    static async void update()
+    {
+      List<AmenitiesObject> updateAmenity = await start_get(7);
+
+      foreach (AmenitiesObject item in updateAmenity)
+      {
+        item.Item = "Hot Tub";
+        await UpdateProductAsync(item);
+      }
+    }
+
+
+
+
+
+
+
     // https://stackoverflow.com/questions/44775645/how-to-get-data-from-json-api-with-c-sharp-using-httpwebrequest
     // Question answered by: Keyur Patel
     // Answer provided on: Jun 27 '17 at 8:51
-    private static List<AmenitiesObject> start_get(int id = 0)
+    private static async Task<List<AmenitiesObject>> start_get(int id = 0)
     {
       string newURL = $"{URL}api/Amenities/";
       if (id != 0)
@@ -70,9 +116,6 @@ namespace TheBestGameEver
     static async void RunAsync()
     {
       // Update port # in the following line.
-      client.BaseAddress = new Uri(URL);
-      client.DefaultRequestHeaders.Accept.Clear();
-      client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
       try
       {
         // Create a new product
@@ -92,9 +135,9 @@ namespace TheBestGameEver
         //  Console.WriteLine(item.Item);
         //  await UpdateProductAsync(item);
         //}
-        Console.WriteLine("Starting delete method");
-        string DelResp = DeleteProduct(9);
-        Console.WriteLine(DelResp);
+        //Console.WriteLine("Starting delete method");
+        //string DelResp = DeleteProduct(9);
+        //Console.WriteLine(DelResp);
       }
       catch (Exception e)
       {
@@ -112,7 +155,7 @@ namespace TheBestGameEver
       amenity = await response.Content.ReadAsAsync<AmenitiesObject>();
       return amenity;
     }
-    static string DeleteProduct(int id)
+    static async Task<string> DeleteProduct(int id)
     {
       Console.WriteLine("inside Delete Function");
       string StrResp;
