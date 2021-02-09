@@ -4,10 +4,9 @@ using System.Text;
 
 namespace TheBestGameEver.Classes
 {
-  public class AmenitiesObject
+  class ClassSkills
   {
-    public int ID { get; set; }
-    public string Item { get; set; }
-
+    public int classID { get; set; }
+    public int skillID { get; set; }
   }
 }
