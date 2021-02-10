@@ -15,7 +15,7 @@ namespace TheBestGameEver
   class Program
   {
     static HttpClient client = new HttpClient();
-    static string URL = "https://asyncinnapp.azurewebsites.net/";
+    static string URL = "https://customcharacter1.azurewebsites.net/";
     static HttpWebRequest WebReq;
     static HttpWebResponse WebResp;
     static void Main(string[] args)
@@ -42,8 +42,9 @@ namespace TheBestGameEver
     {
       Ability ability = new Ability
       {
-        Name = "Skyline View",
-        Desc = "Glorious Views"
+        Name = "Night vision",
+        Desc = "Can see... at night.."
+
       };
       var url = await CreateAbilityAsync(ability);
       Console.WriteLine($"Created at {url}");
@@ -52,14 +53,15 @@ namespace TheBestGameEver
     static async void delete()
     {
       Console.WriteLine("Starting delete method");
-      string DelResp = await DeleteProduct(12);
+      string DelResp = await DeleteProduct(3);
     }
 
     static async void update()
     {
-      List<Ability> updateAbility = await start_get(7);
+      List<Ability> updateAbility = await start_get(2);
       Ability ability = updateAbility.First();
-      ability.Name = "Built in emotional support cat";
+      ability.Name = "Fireball casting";
+      ability.Desc = "Things get real hot";
       await UpdateProductAsync(ability);
     }
 
@@ -110,7 +112,7 @@ namespace TheBestGameEver
     static async Task<Ability> UpdateProductAsync(Ability ability)
     {
       HttpResponseMessage response = await client.PutAsJsonAsync(
-          $"api/Amenities/{ability.ID}", ability);
+          $"api/Abilities/{ability.ID}", ability);
       response.EnsureSuccessStatusCode();
 
       // Deserialize the updated product from the response body.
@@ -121,7 +123,7 @@ namespace TheBestGameEver
     {
       Console.WriteLine("inside Delete Function");
       string StrResp;
-      WebReq = (HttpWebRequest)WebRequest.Create(URL + $"api/Amenities/{id}");
+      WebReq = (HttpWebRequest)WebRequest.Create(URL + $"api/Abilities/{id}");
       WebReq.Method = "DELETE";
       WebResp = (HttpWebResponse)WebReq.GetResponse();
       using (StreamReader stream = new StreamReader(WebResp.GetResponseStream()))
