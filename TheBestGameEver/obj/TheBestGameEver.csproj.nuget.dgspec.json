@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\AlanY\\Documents\\Projects\\Code Fellows 401\\Midterm Project Console\\TheBestGameEver\\TheBestGameEver.csproj": {}
+    "C:\\Users\\zanyg\\Source\\Repos\\ItsTheBestGameEver\\TheBestGameEver\\TheBestGameEver.csproj": {}
   },
   "projects": {
-    "C:\\Users\\AlanY\\Documents\\Projects\\Code Fellows 401\\Midterm Project Console\\TheBestGameEver\\TheBestGameEver.csproj": {
+    "C:\\Users\\zanyg\\Source\\Repos\\ItsTheBestGameEver\\TheBestGameEver\\TheBestGameEver.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\AlanY\\Documents\\Projects\\Code Fellows 401\\Midterm Project Console\\TheBestGameEver\\TheBestGameEver.csproj",
+        "projectUniqueName": "C:\\Users\\zanyg\\Source\\Repos\\ItsTheBestGameEver\\TheBestGameEver\\TheBestGameEver.csproj",
         "projectName": "TheBestGameEver",
-        "projectPath": "C:\\Users\\AlanY\\Documents\\Projects\\Code Fellows 401\\Midterm Project Console\\TheBestGameEver\\TheBestGameEver.csproj",
-        "packagesPath": "C:\\Users\\AlanY\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\AlanY\\Documents\\Projects\\Code Fellows 401\\Midterm Project Console\\TheBestGameEver\\obj\\",
+        "projectPath": "C:\\Users\\zanyg\\Source\\Repos\\ItsTheBestGameEver\\TheBestGameEver\\TheBestGameEver.csproj",
+        "packagesPath": "C:\\Users\\zanyg\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\zanyg\\Source\\Repos\\ItsTheBestGameEver\\TheBestGameEver\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\AlanY\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\zanyg\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -44,6 +44,14 @@
               "target": "Package",
               "version": "[5.2.7, )"
             },
+            "Microsoft.AspNetCore.Identity": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[3.1.11, )"
+            },
             "Newtonsoft.Json": {
               "target": "Package",
               "version": "[12.0.3, )"
@@ -64,7 +72,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.102\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     }

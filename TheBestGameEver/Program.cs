@@ -7,6 +7,8 @@ using TheBestGameEver.Classes;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using System.Linq;
+using TheBestGameEver.Models;
 
 namespace TheBestGameEver
 {
@@ -18,8 +20,12 @@ namespace TheBestGameEver
     static HttpWebResponse WebResp;
     static void Main(string[] args)
     {
-      read();
-      create();
+      client.BaseAddress = new Uri(URL);
+      client.DefaultRequestHeaders.Accept.Clear();
+      client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+      // read();
+      // create();
       read();
       delete();
       read();
@@ -34,47 +40,35 @@ namespace TheBestGameEver
 
     static async void create()
     {
-      client.BaseAddress = new Uri(URL);
-      client.DefaultRequestHeaders.Accept.Clear();
-      client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-      AmenitiesObject amenity = new AmenitiesObject
+      Ability ability = new Ability
       {
-        Item = "Balcony"
+        Name = "Skyline View",
+        Desc = "Glorious Views"
       };
-      var url = await CreateProductAsync(amenity);
+      var url = await CreateAbilityAsync(ability);
       Console.WriteLine($"Created at {url}");
     }
 
     static async void delete()
     {
       Console.WriteLine("Starting delete method");
-      string DelResp = await DeleteProduct(6);
+      string DelResp = await DeleteProduct(12);
     }
 
     static async void update()
     {
-      List<AmenitiesObject> updateAmenity = await start_get(7);
-
-      foreach (AmenitiesObject item in updateAmenity)
-      {
-        item.Item = "Hot Tub";
-        await UpdateProductAsync(item);
-      }
+      List<Ability> updateAbility = await start_get(7);
+      Ability ability = updateAbility.First();
+      ability.Name = "Built in emotional support cat";
+      await UpdateProductAsync(ability);
     }
-
-
-
-
-
-
 
     // https://stackoverflow.com/questions/44775645/how-to-get-data-from-json-api-with-c-sharp-using-httpwebrequest
     // Question answered by: Keyur Patel
     // Answer provided on: Jun 27 '17 at 8:51
-    private static async Task<List<AmenitiesObject>> start_get(int id = 0)
+    private static async Task<List<Ability>> start_get(int id = 0)
     {
-      string newURL = $"{URL}api/Amenities/";
+      string newURL = $"{URL}api/Abilities/";
       if (id != 0)
       {
         newURL += id;
@@ -93,67 +87,35 @@ namespace TheBestGameEver
       }
       if (id == 0)
       {
-        List<AmenitiesObject> items = JsonConvert.DeserializeObject<List<AmenitiesObject>>(jsonString);
-        foreach (var amenity in items)
+        List<Ability> items = JsonConvert.DeserializeObject<List<Ability>>(jsonString);
+        foreach (var ability in items)
         {
-          Console.WriteLine(amenity.ID);
-          Console.WriteLine(amenity.Item);
+          Console.WriteLine(ability.ID);
+          Console.WriteLine(ability.Name);
         }
         return items;
       }
-      List<AmenitiesObject> itemsA = new List<AmenitiesObject>();
-      itemsA.Add(JsonConvert.DeserializeObject<AmenitiesObject>(jsonString));
+      List<Ability> itemsA = new List<Ability>();
+      itemsA.Add(JsonConvert.DeserializeObject<Ability>(jsonString));
       return itemsA;
     }
-    static async Task<Uri> CreateProductAsync(AmenitiesObject amenity)
+    static async Task<Uri> CreateAbilityAsync(Ability ability)
     {
       HttpResponseMessage response = await client.PostAsJsonAsync(
-          "api/Amenities", amenity);
+          "api/Abilities", ability);
       response.EnsureSuccessStatusCode();
       return response.Headers.Location;
     }
 
-    static async void RunAsync()
-    {
-      // Update port # in the following line.
-      try
-      {
-        // Create a new product
-        AmenitiesObject amenity = new AmenitiesObject
-        {
-          Item = "Balcony"
-        };
-        // var url = await CreateProductAsync(amenity);
-        // Console.WriteLine($"Created at {url}");
-        //List<AmenitiesObject> updateAmenity = start_get(6);
-        //foreach (AmenitiesObject item in updateAmenity)
-        //{
-        //  Console.WriteLine(item.ID);
-        //  Console.WriteLine(item.Item);
-        //  item.Item = "Banana";
-        //  Console.WriteLine(item.ID);
-        //  Console.WriteLine(item.Item);
-        //  await UpdateProductAsync(item);
-        //}
-        //Console.WriteLine("Starting delete method");
-        //string DelResp = DeleteProduct(9);
-        //Console.WriteLine(DelResp);
-      }
-      catch (Exception e)
-      {
-        throw e;
-      }
-
-    }
-    static async Task<AmenitiesObject> UpdateProductAsync(AmenitiesObject amenity)
+    static async Task<Ability> UpdateProductAsync(Ability ability)
     {
       HttpResponseMessage response = await client.PutAsJsonAsync(
-          $"api/Amenities/{amenity.ID}", amenity);
+          $"api/Amenities/{ability.ID}", ability);
       response.EnsureSuccessStatusCode();
 
       // Deserialize the updated product from the response body.
-      amenity = await response.Content.ReadAsAsync<AmenitiesObject>();
-      return amenity;
+      ability = await response.Content.ReadAsAsync<Ability>();
+      return ability;
     }
     static async Task<string> DeleteProduct(int id)
     {
@@ -169,6 +131,35 @@ namespace TheBestGameEver
       }
       return StrResp;
     }
+    // These are going to be our hotel methods below
+    //static async void read()
+    //{
+    //  await start_get();
+    //}
+
+    //static async void create()
+    //{
+    //  AmenitiesObject amenity = new AmenitiesObject
+    //  {
+    //    Item = "Skyline View"
+    //  };
+    //  var url = await CreateProductAsync(amenity);
+    //  Console.WriteLine($"Created at {url}");
+    //}
+
+    //static async void delete()
+    //{
+    //  Console.WriteLine("Starting delete method");
+    //  string DelResp = await DeleteProduct(12);
+    //}
+
+    //static async void update()
+    //{
+    //  List<AmenitiesObject> updateAmenity = await start_get(7);
+    //  AmenitiesObject amenitiesObject = updateAmenity.First();
+    //  amenitiesObject.Item = "Built in emotional support cat";
+    //  await UpdateProductAsync(amenitiesObject);
+    //}
   }
 }
 
