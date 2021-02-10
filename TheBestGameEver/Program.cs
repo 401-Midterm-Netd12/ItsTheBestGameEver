@@ -35,6 +35,14 @@ namespace TheBestGameEver
       CreateSkill();
       ReadSkill();
 
+      /* ===== Menu Test Calls Start Here ===== */
+
+      //Console.ForegroundColor = ConsoleColor.White;
+      //LoginMenu();
+      //CreateACharacterMenu();
+
+      /* ===== Menu Test Calls Ends Here ===== */
+
     }
 
     static async void read()
@@ -239,6 +247,283 @@ namespace TheBestGameEver
       return StrResp;
     }
 
-  }
-}
+
+    /* ==================================================================================================== */
+    /* ======================================= Menu Method Section ======================================== */
+    /* ==================================================================================================== */
+
+    static void ConsoleHeader()
+    {
+      Console.WriteLine("\t\t\t============================================================================");
+      Console.WriteLine("\t\t\t= ||\\    /||   ||\\    ||                      //////////////               =");
+      Console.WriteLine("\t\t\t= || \\  / ||   || \\   ||                   ////           ////             =");
+      Console.WriteLine("\t\t\t= ||  \\/  ||   ||  \\  ||                ////                ////           =");
+      Console.WriteLine("\t\t\t= ||      ||   ||   \\ ||              ////                   ////          =");
+      Console.WriteLine("\t\t\t= ||      || o ||    \\|| o            ==========|     |==========          =");
+      Console.WriteLine("\t\t\t=                                  =====|  O    |=====|  O    |====        =");
+      Console.WriteLine("\t\t\t=                                   @@@ ========|     |======== @@         =");
+      Console.WriteLine("\t\t\t=                                    @                          @          =");
+      Console.WriteLine("\t\t\t=                                    @@@      |---------|      @@.         =");
+      Console.WriteLine("\t\t\t=                                       @@@   |---------|  *@@#            =");
+      Console.WriteLine("\t\t\t=                                          %@@@@@////#@@@@@.               =");
+      Console.WriteLine("\t\t\t=                                             /////////                    =");
+      Console.WriteLine("\t\t\t============================================================================");
+      PushScreenDown(2);
+    }
+
+    static void ScreenHeaderDisplay()
+    {
+      Console.Clear();
+      PushScreenDown(2);
+      ConsoleHeader();
+    }
+
+    static void PauseScreen()
+    {
+      Console.WriteLine("\n\nPlease press enter to continue...");
+      Console.ReadKey();
+    }
+
+    static void PushScreenDown(int lines)
+    {
+      for (int i = 0; i < lines; i++)
+      {
+        Console.WriteLine();
+      }
+    }
+
+    // Answer From: https://stackoverflow.com/questions/21917203/how-do-i-center-text-in-a-console-application
+    // Answer By: EZI
+    // Answer On: Feb 20 '14 at 19:29
+    static void CenterConsoleText(int stringLength)
+    {
+      Console.SetCursorPosition((Console.WindowWidth - stringLength) / 2, Console.CursorTop);
+    }
+
+    static void MakeSelection(int maxChoices)
+    {
+      Console.ForegroundColor = ConsoleColor.White;
+      CenterConsoleText(35);
+      Console.Write("Please Make a Selection ");
+      Console.ForegroundColor = ConsoleColor.Yellow;
+      Console.Write("(1-{0}): ", maxChoices);
+      Console.ForegroundColor = ConsoleColor.White;
+    }
+
+    static void InvalidSelection()
+    {
+      Console.ForegroundColor = ConsoleColor.Red;
+      Console.WriteLine("\nInvalid Selection...");
+      Console.ForegroundColor = ConsoleColor.White;
+      PauseScreen();
+    }
+
+    static void LoginMenu()
+    {
+      bool exit = false;
+      string userInput;
+
+      do
+      {
+        ScreenHeaderDisplay();
+        CenterConsoleText(35);
+        Console.Write("Welcome to ");
+        Console.ForegroundColor = ConsoleColor.Magenta;
+        Console.WriteLine("It's the Best Game Ever!\n");
+        Console.ForegroundColor = ConsoleColor.Green;
+        CenterConsoleText(35);
+        Console.WriteLine("\t1. Login");
+        CenterConsoleText(35);
+        Console.WriteLine("\t2. Register");
+        CenterConsoleText(35);
+        Console.WriteLine("\t3. Exit\n");
+        Console.ForegroundColor = ConsoleColor.White;
+        MakeSelection(3);
+        userInput = Console.ReadLine();
+
+        switch (userInput)
+        {
+          case "1":
+            UserLogin();
+            exit = true;
+            break;
+          case "2":
+            RegisterUser();
+            break;
+          case "3":
+            exit = true;
+            break;
+          default:
+            InvalidSelection();
+            break;
+        }
+
+        Console.ForegroundColor = ConsoleColor.White;
+      } while (!exit);
+    }
+
+    // Answer From: https://stackoverflow.com/questions/23433980/c-sharp-console-hide-the-input-from-console-window-while-typing
+    // Answer By: dataCore
+    // Answer On: Mar 31 '16 at 11:41
+    static string getPasswd()
+    {
+      string userPwd = "";
+
+      while (true)
+      {
+        var key = System.Console.ReadKey(true);
+        if (key.Key == ConsoleKey.Enter)
+        {
+          break;
+        }
+        userPwd += key.KeyChar;
+      }
+
+      return userPwd;
+    }
+
+    static void RegisterUser()
+    {
+      bool exit = false;
+      string user;
+      string userPwd = "";
+      string confirmUserPwd = "";
+      string userEmail;
+
+      do
+      {
+        ScreenHeaderDisplay();
+        Console.ForegroundColor = ConsoleColor.White;
+        CenterConsoleText(35);
+        Console.WriteLine("Please enter your information: \n");
+        Console.ForegroundColor = ConsoleColor.Green;
+        CenterConsoleText(35);
+        Console.Write("User Name: ");
+        Console.ForegroundColor = ConsoleColor.White;
+        user = Console.ReadLine();
+        Console.ForegroundColor = ConsoleColor.Green;
+        CenterConsoleText(35);
+        Console.Write("Password: ");
+        Console.ForegroundColor = ConsoleColor.White;
+        userPwd = getPasswd();
+        Console.ForegroundColor = ConsoleColor.Green;
+        Console.WriteLine();
+        CenterConsoleText(35);
+        Console.Write("Confirm Password: ");
+        Console.ForegroundColor = ConsoleColor.White;
+        confirmUserPwd = getPasswd();
+        Console.ForegroundColor = ConsoleColor.Green;
+        Console.WriteLine();
+        CenterConsoleText(35);
+        Console.Write("Email: ");
+        Console.ForegroundColor = ConsoleColor.White;
+        userEmail = Console.ReadLine();
+
+        if (userPwd == confirmUserPwd)
+        {
+          Console.ForegroundColor = ConsoleColor.DarkCyan;
+          PushScreenDown(2);
+          CenterConsoleText(35);
+          Console.WriteLine("Please return to main menu and login");
+          Console.ForegroundColor = ConsoleColor.White;
+          PauseScreen();
+          exit = true;
+        }
+        else
+        {
+          Console.WriteLine("\nPasswords do not match...");
+          PauseScreen();
+        }
+      } while (!exit);
+    }
+
+    static void UserLogin()
+    {
+      bool exit = false;
+      string user;
+      string userPwd = "";
+
+      do
+      {
+        ScreenHeaderDisplay();
+        Console.ForegroundColor = ConsoleColor.Green;
+        CenterConsoleText(35);
+        Console.Write("Login: ");
+        Console.ForegroundColor = ConsoleColor.White;
+        user = Console.ReadLine();
+        Console.ForegroundColor = ConsoleColor.Green;
+        CenterConsoleText(35);
+        Console.Write("Password: ");
+        Console.ForegroundColor = ConsoleColor.White;
+        userPwd = getPasswd();
+        exit = true;
+      } while (!exit);
+    }
+
+    static void CreateACharacterMenu()
+    {
+      bool exit = false;
+      string userChoice;
+
+      do
+      {
+        ScreenHeaderDisplay();
+        CenterConsoleText(35);
+        Console.WriteLine("What would you like to do?\n");
+        CenterConsoleText(35);
+        Console.Write("1. Create/Modify a");
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.WriteLine(" Character");
+        Console.ForegroundColor = ConsoleColor.White;
+        CenterConsoleText(35);
+        Console.Write("2. Create/Modify a");
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.WriteLine(" Race");
+        Console.ForegroundColor = ConsoleColor.White;
+        CenterConsoleText(35);
+        Console.Write("3. Create/Modify a");
+        Console.ForegroundColor = ConsoleColor.Green;
+        Console.WriteLine(" Class");
+        Console.ForegroundColor = ConsoleColor.White;
+        CenterConsoleText(35);
+        Console.Write("4. Create/Modify a");
+        Console.ForegroundColor = ConsoleColor.Blue;
+        Console.WriteLine(" Ability");
+        Console.ForegroundColor = ConsoleColor.White;
+        CenterConsoleText(35);
+        Console.Write("5. Create/Modify a");
+        Console.ForegroundColor = ConsoleColor.Cyan;
+        Console.WriteLine(" Skill");
+        Console.ForegroundColor = ConsoleColor.White;
+        CenterConsoleText(35);
+        Console.WriteLine("6. Exit");
+        PushScreenDown(1);
+        MakeSelection(6);
+        userChoice = Console.ReadLine();
+
+        switch (userChoice)
+        {
+          case "1":
+            break;
+          case "2":
+            break;
+          case "3":
+            break;
+          case "4":
+            break;
+          case "5":
+            break;
+          case "6":
+            exit = true;
+            break;
+          default:
+            InvalidSelection();
+            break;
+        }
+      } while (!exit);
+    }
+
+
+  } //end of Program Class
+} //end of NameSpace
 
