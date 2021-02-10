@@ -9,6 +9,6 @@ namespace TheBestGameEver.Models
     public int ID { get; set; }
     public int StatModifier { get; set; }
     public List<ClassSkill> ClassSkills { get; set; }
-    public string ClassNames { get; set; }
+    public string ClassName { get; set; }
   }
 }

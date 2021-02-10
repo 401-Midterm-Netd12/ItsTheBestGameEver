@@ -7,10 +7,10 @@ namespace TheBestGameEver.Classes
 {
   class Character
   {
-    public int ID { get; set; }
-    public string UserID { get; set; }
-    public int RaceID { get; set; }
-    public int ClassID { get; set; }
+    public int Id { get; set; }
+    public string UserId { get; set; }
+    public int RaceId { get; set; }
+    public int ClassId { get; set; }
     public string Name { get; set; }
     public int HP { get; set; }
     public int Dex { get; set; }

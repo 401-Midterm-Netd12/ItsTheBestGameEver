@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "XzSFPr+c9s/2K1CNcAmKNOFZEPq/BY8htQgHihuH/IJPrRgkUTbboDF5vVNA72ZqiHqILJ0283t2KnXGJKy4Jw==",
+  "dgSpecHash": "+xS6kVCO62HbGcQ3FofD3n2T41vMhfF4G1EZuzwoyOzYSrfRrBzRDGzuRLcwwbJ47N4ANejx1LEqgPUuOh3DYQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\zanyg\\Source\\Repos\\ItsTheBestGameEver\\TheBestGameEver\\TheBestGameEver.csproj",
+  "projectFilePath": "C:\\Users\\zanyg\\source\\repos\\ItsTheBestGameEver\\TheBestGameEver\\TheBestGameEver.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\zanyg\\.nuget\\packages\\microsoft.aspnet.webapi.client\\5.2.7\\microsoft.aspnet.webapi.client.5.2.7.nupkg.sha512",
     "C:\\Users\\zanyg\\.nuget\\packages\\microsoft.aspnetcore.authentication\\2.2.0\\microsoft.aspnetcore.authentication.2.2.0.nupkg.sha512",
