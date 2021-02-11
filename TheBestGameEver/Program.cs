@@ -10,13 +10,14 @@ using System.Threading.Tasks;
 using System.Linq;
 using TheBestGameEver.Models;
 using TheBestGameEver.Models.DTOs;
+using System.Text;
 
 namespace TheBestGameEver
 {
   class Program
   {
     static HttpClient client = new HttpClient();
-    static string URL = "https://customcharacter1.azurewebsites.net/";
+    static string URL = "https://customcharacter1.azurewebsites.net";
     static HttpWebRequest WebReq;
     static HttpWebResponse WebResp;
     static void Main(string[] args)
@@ -26,156 +27,276 @@ namespace TheBestGameEver
       client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
       //read();
-      //create();
-      //read();
       //delete();
-      //read();
+
+      create();
       //update();
-      //read();
 
-      //ReadSkill();
       // CreateSkill();
-      // ReadSkill();
       // UpdateSkill();
-      //ReadSkill();
       //DeleteSkill();
-      //ReadSkill();
 
-      // ReadClass();
       // CreateClass();
-      //ReadClass();
       //DeleteClass();
-      //ReadClass();
       //UpdateClass();
-      //ReadClass();
 
-      // ReadRace();
       // CreateRace();
-      //ReadRace();
       //UpdateRace();
-      //ReadRace();
       //DeleteRace();
-      //ReadRace();
 
-      ReadCharacter();
-      CreateCharacter();
-      ReadCharacter();
+      //CreateCharacter();
       //UpdateCharacter();
-      //ReadCharacter();
 
 
     }
 
     static async void read()
     {
-      await start_get();
+      await GetModels(CurrentURL(CharacterModels.Ability));
+      await GetModels(CurrentURL(CharacterModels.Race));
+      await GetModels(CurrentURL(CharacterModels.Skill));
+      await GetModels(CurrentURL(CharacterModels.Class));
+      await GetModels(CurrentURL(CharacterModels.Character));
+
+      await GetModels(CurrentURL(CharacterModels.Ability), 1);
+      await GetModels(CurrentURL(CharacterModels.Race), 1);
+      await GetModels(CurrentURL(CharacterModels.Skill), 4);
+      await GetModels(CurrentURL(CharacterModels.Class), 3);
+      await GetModels(CurrentURL(CharacterModels.Character), 2);
     }
+
+    static async void delete()
+    {
+      string DelResp;
+      Console.WriteLine("Starting delete method");
+      DelResp = await DeleteModels(4, CurrentURL(CharacterModels.Character));
+      DelResp = await DeleteModels(5, CurrentURL(CharacterModels.Ability));
+      DelResp = await DeleteModels(1, CurrentURL(CharacterModels.Class));
+      DelResp = await DeleteModels(3, CurrentURL(CharacterModels.Race));
+      DelResp = await DeleteModels(6, CurrentURL(CharacterModels.Skill));
+    }
+
+
+
+
+
 
     static async void create()
     {
       Ability ability = new Ability
       {
-        Name = "Night vision",
-        Desc = "Can see... at night.."
-
+        name = "Night vision",
+        desc = "Can see... at night.."
       };
-      var url = await CreateAbilityAsync(ability);
-      Console.WriteLine($"Created at {url}");
+
+      var Result = CreateTestCode(ability);
+      Console.WriteLine(Result.ToString());
     }
 
-    static async void delete()
+    //static async void update()
+    //{
+    //  List<Ability> updateAbility = await start_get(5);
+    //  Ability ability = updateAbility.First();
+    //  ability.Name = "Built in emotional support cat";
+    //  ability.Desc = "You can cry into a soft object";
+    //  await UpdateAbilityAsync(ability);
+    //}
+
+    /* ==================================================================================================== */
+    /* ========================================== Helper Methods ========================================== */
+    /* ==================================================================================================== */
+
+    static string CurrentURL(CharacterModels currentModel)
     {
-      Console.WriteLine("Starting delete method");
-      string DelResp = await DeleteAbility(3);
+      switch (currentModel)
+      {
+        case CharacterModels.Ability:
+          return "/api/Abilities";
+        case CharacterModels.Class:
+          return "/api/Classes";
+        case CharacterModels.Race:
+          return "/api/Races";
+        case CharacterModels.Skill:
+          return "/api/Skills";
+        case CharacterModels.Character:
+          return "/api/Character";
+        default:
+          return "";
+      }
     }
 
-    static async void update()
-    {
-      List<Ability> updateAbility = await start_get(5);
-      Ability ability = updateAbility.First();
-      ability.Name = "Built in emotional support cat";
-      ability.Desc = "You can cry into a soft object";
-      await UpdateAbilityAsync(ability);
-    }
+    /* ==================================================================================================== */
+    /* =========================================== CRUD Methods =========================================== */
+    /* ==================================================================================================== */
+
 
     // https://stackoverflow.com/questions/44775645/how-to-get-data-from-json-api-with-c-sharp-using-httpwebrequest
     // Question answered by: Keyur Patel
     // Answer provided on: Jun 27 '17 at 8:51
-    private static async Task<List<Ability>> start_get(int id = 0)
+    private static async Task<List<Ability>> GetModels(string modelURL, int id = 0)
     {
-      string newURL = $"{URL}api/Abilities/";
+      string newURL = URL + modelURL;
+      string jsonString;
+
       if (id != 0)
       {
         newURL += id;
-        Console.WriteLine(newURL);
       }
+
       WebReq = (HttpWebRequest)WebRequest.Create(string.Format(newURL));
       WebReq.Method = "GET";
       WebResp = (HttpWebResponse)WebReq.GetResponse();
-      Console.WriteLine(WebResp.StatusCode);
-      Console.WriteLine(WebResp.Server);
-      string jsonString;
+
       using (Stream stream = WebResp.GetResponseStream()) //modified from your code since the using statement disposes the stream automatically when done
       {
         StreamReader reader = new StreamReader(stream, System.Text.Encoding.UTF8);
         jsonString = reader.ReadToEnd();
       }
+
       if (id == 0)
       {
-        List<Ability> items = JsonConvert.DeserializeObject<List<Ability>>(jsonString);
-        foreach (var ability in items)
+        var items = JsonConvert.DeserializeObject<List<Ability>>(jsonString);
+        foreach (var item in items)
         {
-          Console.WriteLine(ability.ID);
-          Console.WriteLine(ability.Name);
+          
         }
         return items;
       }
       List<Ability> itemsA = new List<Ability>();
       itemsA.Add(JsonConvert.DeserializeObject<Ability>(jsonString));
+      Console.WriteLine(itemsA);
       return itemsA;
     }
-    static async Task<Uri> CreateAbilityAsync(Ability ability)
-    {
-      HttpResponseMessage response = await client.PostAsJsonAsync(
-          "api/Abilities", ability);
-      response.EnsureSuccessStatusCode();
-      return response.Headers.Location;
-    }
 
-    static async Task<Ability> UpdateAbilityAsync(Ability ability)
+    static async Task<string> DeleteModels(int id, string modelURL)
     {
-      try
-      {
-        HttpResponseMessage response = await client.PutAsJsonAsync(
-          $"api/Abilities/{ability.ID}", ability);
-        response.EnsureSuccessStatusCode();
-
-        // Deserialize the updated product from the response body.
-        ability = await response.Content.ReadAsAsync<Ability>();
-        return ability;
-      }
-      catch(Exception e)
-      {
-        Console.WriteLine(e);
-        throw e;
-      }
-    }
-    static async Task<string> DeleteAbility(int id)
-    {
-      Console.WriteLine("inside Delete Function");
       string StrResp;
-      WebReq = (HttpWebRequest)WebRequest.Create(URL + $"api/Abilities/{id}");
+      string newURL = URL + modelURL + id;
+
+      WebReq = (HttpWebRequest)WebRequest.Create(newURL);
       WebReq.Method = "DELETE";
       WebResp = (HttpWebResponse)WebReq.GetResponse();
+
       using (StreamReader stream = new StreamReader(WebResp.GetResponseStream()))
       {
         StrResp = stream.ReadToEnd();
-        Console.WriteLine("inside StreamReader");
       }
+
       return StrResp;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+    //static void CreateTestCode(Ability newAbility)
+    //{
+    //  string newURL = URL + "/api/Abilities";
+    //  JsonSerializer serializer = new JsonSerializer();
+    //  string jsonObj = JsonConvert.SerializeObject(newAbility);
+
+    //  WebReq = (HttpWebRequest)WebRequest.Create(string.Format(URL));
+    //  WebReq.ContentType = "application/json; charset=utf-8";
+    //  WebReq.Method = "POST";
+    //  WebReq.Accept = "application/json; charset=utf-8";
+
+    //  Console.WriteLine(jsonObj);
+
+    //  using (StreamWriter stream = new StreamWriter(WebReq.GetRequestStream()))
+    //  {
+    //    stream.Write(jsonObj);
+    //  }
+    //}
+
+
+    static HttpResponseMessage CreateTestCode(Ability newAbility)
+    {
+      HttpResponseMessage response = null;
+      string jsonObj = JsonConvert.SerializeObject(newAbility);
+      Console.WriteLine(jsonObj);
+      try
+      {
+        response = client.PostAsync("/api/Abilities", new StringContent(jsonObj, Encoding.UTF8, "application/json")).Result;
+        response.EnsureSuccessStatusCode();
+        // Handle success
+      }
+      catch (HttpRequestException)
+      {
+        Console.WriteLine("Code broke");
+        // Handle failure
+      }
+      return response;
+    }
+
+
+
+
+    //static async Task<Uri> CreateModels(string modelURL, Character characterObj = null, Ability abilityObj = null, Race raceObj = null, Skill skillObj = null, Class classObj = null)
+    //{
+    //  string newURL = URL + modelURL;
+    //  HttpResponseMessage response = null;
+
+    //  if (abilityObj != null)
+    //  {
+    //    response = await client.PostAsJsonAsync(
+    //        newURL, abilityObj);
+    //  }
+    //  else if(characterObj != null)
+    //  {
+    //    response = await client.PostAsJsonAsync(
+    //        newURL, characterObj);
+    //  }
+    //  else if (skillObj != null)
+    //  {
+    //    response = await client.PostAsJsonAsync(
+    //        newURL, skillObj);
+    //  }
+    //  else if (raceObj != null)
+    //  {
+    //    response = await client.PostAsJsonAsync(
+    //        newURL, raceObj);
+    //  }
+    //  else if (classObj != null)
+    //  {
+    //    response = await client.PostAsJsonAsync(
+    //        newURL, classObj);
+    //  }
+    //  else
+    //  {
+
+    //  }
+
+    //  response.EnsureSuccessStatusCode();
+    //  return response.Headers.Location;
+    //}
+
+    //static async Task<Ability> UpdateAbilityAsync(Ability ability)
+    //{
+    //  try
+    //  {
+    //    HttpResponseMessage response = await client.PutAsJsonAsync(
+    //      $"api/Abilities/{ability.id}", ability);
+    //    response.EnsureSuccessStatusCode();
+
+    //    // Deserialize the updated product from the response body.
+    //    ability = await response.Content.ReadAsAsync<Ability>();
+    //    return ability;
+    //  }
+    //  catch(Exception e)
+    //  {
+    //    Console.WriteLine(e);
+    //    throw e;
+    //  }
+    //}
     // These are going to be our skills methods below
-    
+
 
 
 
@@ -594,9 +715,20 @@ namespace TheBestGameEver
         Console.WriteLine("inside StreamReader");
       }
       return StrResp;
+
+
     }
 
 
+  }//end of class Program
+
+  public enum CharacterModels
+  {
+    Character,
+    Race,
+    Class,
+    Skill,
+    Ability
   }
-}
+}// end of namespace
 
