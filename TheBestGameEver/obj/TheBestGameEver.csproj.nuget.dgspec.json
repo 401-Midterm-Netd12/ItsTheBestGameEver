@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\AlanY\\Documents\\Projects\\Code Fellows 401\\Midterm Project Console\\TheBestGameEver\\TheBestGameEver.csproj": {}
+    "C:\\Users\\Matthew\\source\\repos\\ItsTheBestGameEver\\TheBestGameEver\\TheBestGameEver.csproj": {}
   },
   "projects": {
-    "C:\\Users\\AlanY\\Documents\\Projects\\Code Fellows 401\\Midterm Project Console\\TheBestGameEver\\TheBestGameEver.csproj": {
+    "C:\\Users\\Matthew\\source\\repos\\ItsTheBestGameEver\\TheBestGameEver\\TheBestGameEver.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\AlanY\\Documents\\Projects\\Code Fellows 401\\Midterm Project Console\\TheBestGameEver\\TheBestGameEver.csproj",
+        "projectUniqueName": "C:\\Users\\Matthew\\source\\repos\\ItsTheBestGameEver\\TheBestGameEver\\TheBestGameEver.csproj",
         "projectName": "TheBestGameEver",
-        "projectPath": "C:\\Users\\AlanY\\Documents\\Projects\\Code Fellows 401\\Midterm Project Console\\TheBestGameEver\\TheBestGameEver.csproj",
-        "packagesPath": "C:\\Users\\AlanY\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\AlanY\\Documents\\Projects\\Code Fellows 401\\Midterm Project Console\\TheBestGameEver\\obj\\",
+        "projectPath": "C:\\Users\\Matthew\\source\\repos\\ItsTheBestGameEver\\TheBestGameEver\\TheBestGameEver.csproj",
+        "packagesPath": "C:\\Users\\Matthew\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Matthew\\source\\repos\\ItsTheBestGameEver\\TheBestGameEver\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\AlanY\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Matthew\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -55,6 +55,10 @@
             "Newtonsoft.Json": {
               "target": "Package",
               "version": "[12.0.3, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[6.8.0, )"
             }
           },
           "imports": [

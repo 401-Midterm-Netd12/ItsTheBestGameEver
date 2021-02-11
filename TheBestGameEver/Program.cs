@@ -11,6 +11,7 @@ using System.Linq;
 using TheBestGameEver.Models;
 using TheBestGameEver.Models.DTOs;
 using System.Text;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace TheBestGameEver
 {
@@ -30,31 +31,102 @@ namespace TheBestGameEver
       //delete();
 
       //create();
-      update();
+      //update();
 
-      // CreateSkill();
-      // UpdateSkill();
+      //CreateSkill();
+      //UpdateSkill();
       //DeleteSkill();
 
-      // CreateClass();
+      //CreateClass();
       //DeleteClass();
       //UpdateClass();
 
-      // CreateRace();
+      //CreateRace();
       //UpdateRace();
       //DeleteRace();
 
       //CreateCharacter();
       //UpdateCharacter();
 
+      CreateUserandLogin();
 
-      /* === Menu Commands === */
+        static void CreateUserandLogin()
+        {
+            RegisterUser createdUser = new RegisterUser
+            {
+                Username = "Meep123456789123456789123",
+                Email = "Meep123456789123456789123@meep.com",
+                Password = "MeepSupreme.1",
+                PhoneNumber = "meeeeeeep",
+                Roles = new List<string> { "Player" }
+            };
+            var Result = RegisterNewUser(createdUser);
+            Console.WriteLine(Result.ToString());
+        }
 
-      //Console.ForegroundColor = ConsoleColor.White;
-      //LoginMenu();
-      //CreateACharacterMenu();
+        static HttpResponseMessage RegisterNewUser(RegisterUser user)
+        {
+            HttpResponseMessage response = null;
+            string jsonObj = JsonConvert.SerializeObject(user);
+            Console.WriteLine(jsonObj);
+            string password = user.Password;
 
-    }
+            try
+            {
+                response = client.PostAsync("/api/User/Register", new StringContent(jsonObj, Encoding.UTF8, "application/json")).Result;
+                response.EnsureSuccessStatusCode();
+                // Handle success
+            }
+            catch (HttpRequestException)
+            {
+                Console.WriteLine("Code broke");
+                // Handle failure
+            }
+            Task<string> values = response.Content.ReadAsStringAsync();
+            UserDTO dtoUser = JsonConvert.DeserializeObject<UserDTO>(values.Result);
+
+            UserDTO userdto = new UserDTO
+            {
+                Id = dtoUser.Id,
+                Username = dtoUser.Username,
+                Password = password,
+                Token = dtoUser.Token
+            };
+            var Result = LoginUser(userdto);
+            Console.WriteLine(Result.ToString());
+            return response;
+        }
+
+        static HttpResponseMessage LoginUser(UserDTO user)
+        {
+            HttpResponseMessage response = null;
+            string jsonObj = JsonConvert.SerializeObject(user);
+            Console.WriteLine(jsonObj);
+
+            try
+            {
+                response = client.PostAsync("/api/User/Login", new StringContent(jsonObj, Encoding.UTF8, "application/json")).Result;
+
+                Console.WriteLine("success, user is logged in-------------------------------------------------");
+
+                response.EnsureSuccessStatusCode();
+                // Handle success
+            }
+            catch (HttpRequestException)
+            {
+                Console.WriteLine("Code broke");
+                // Handle failure
+            }
+            return response;
+        }
+
+            /* === Menu Commands === */
+
+            //Console.ForegroundColor = ConsoleColor.White;
+            //LoginMenu();
+            //CreateACharacterMenu();
+
+        }
 
     static async void read()
     {
@@ -166,6 +238,7 @@ namespace TheBestGameEver
         ClassName = "Wood Elf"
 
       };
+
       CRUD<Ability> abilityObj = new CRUD<Ability>();
       abilityObj.CreateModel(ability1, CurrentURL(CharacterModels.Ability));
       abilityObj.CreateModel(ability2, CurrentURL(CharacterModels.Ability));
@@ -212,6 +285,16 @@ namespace TheBestGameEver
         Dex = 4,
         Strength = 8
       };
+        
+      RegisterUser user = new RegisterUser
+      {
+        Username = "Meep12345678912345",
+        Email = "Meep12345678912345@meep.com",
+        Password = "MeepSupreme.1",
+        PhoneNumber = "meeeeeeep",
+        Roles = new List<string> { "Player" }
+      };
+
       CRUD<Ability> abilityObj = new CRUD<Ability>();
       CRUD<Race> raceObj = new CRUD<Race>();
       CRUD<Skill> skillObj = new CRUD<Skill>();
@@ -250,6 +333,8 @@ namespace TheBestGameEver
           return "/api/Skills";
         case CharacterModels.Character:
           return "/api/Character";
+        case CharacterModels.User:
+            return "/api/User/Register";
         default:
           return "";
       }
@@ -539,7 +624,8 @@ namespace TheBestGameEver
     Race,
     Class,
     Skill,
-    Ability
+    Ability,
+    User
   }
 }// end of namespace
 
