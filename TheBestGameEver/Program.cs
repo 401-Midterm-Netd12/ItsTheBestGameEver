@@ -32,9 +32,9 @@ namespace TheBestGameEver
             /* === Menu Commands === */
 
             Console.ForegroundColor = ConsoleColor.White;
-            //LoginMenu();
+            LoginMenu();
   
-            CreateACharacterMenu();
+           //CreateACharacterMenu();
 
         }
 
@@ -304,7 +304,7 @@ namespace TheBestGameEver
             } while (!exit);
         }
 
-        public static void CreateACharacterMenu()
+        public static string CreateACharacterMenu()
         {
             bool exit = false;
             string userChoice;
@@ -364,12 +364,13 @@ namespace TheBestGameEver
                         break;
                     case "6":
                         exit = true;
-                        break;
+                        return "";
                     default:
                         InvalidSelection();
                         break;
                 }
             } while (!exit);
+            return "";
         }
 
         public static void ModelSubMenus(string model)
@@ -469,6 +470,12 @@ namespace TheBestGameEver
                         CreateSwitch(model);
                         break;
                     case "4":
+                        Console.Clear();
+                        PushScreenDown(2);
+                        ConsoleHeader();
+                        //Console.WriteLine($"Please enter the ID of the {model} you would like to update.");
+                        //int userSelection = Convert.ToInt32(Console.ReadLine());
+                        UpdateSwitch(model);
                         break;
                     case "5":
                         DeleteSwitch(model);
@@ -553,6 +560,30 @@ namespace TheBestGameEver
                     break;
                 case "Skill":
                     CreateSkill();
+                    break;
+                default:
+                    InvalidSelection();
+                    break;
+            }
+        }
+        public static void UpdateSwitch(string model)
+        {
+            switch (model)
+            {
+                case "Character":
+                    UpdateCharacter();
+                    break;
+                case "Race":
+                    UpdateRace();
+                    break;
+                case "Class":
+                    UpdateClass();
+                    break;
+                case "Ability":
+                    UpdateAbility();
+                    break;
+                case "Skill":
+                    UpdateSkill();
                     break;
                 default:
                     InvalidSelection();
@@ -939,7 +970,7 @@ namespace TheBestGameEver
         }
 
         /*=========================================================================================================================*/
-        /*=====================================================   Create Methods  ====================================================*/
+        /*==================================================   Create Methods  ====================================================*/
         /*=========================================================================================================================*/
 
         static async void CreateAbility(int id = 0)
@@ -1175,11 +1206,272 @@ namespace TheBestGameEver
             }
         }
 
+        /*=========================================================================================================================*/
+        /*==================================================   Update Methods  ====================================================*/
+        /*=========================================================================================================================*/
+        static async void UpdateAbility(int id = 0)
+        {
+            CRUD<Ability> abilityObj = new CRUD<Ability>();
+            List<Ability> abilitiesList = new List<Ability>();
+            bool exit = false;
+            while (!exit)
+            {
+                Console.WriteLine("1. View Abilities");
+                Console.WriteLine("2. Update an Ability");
+                Console.WriteLine("3. Exit");
+                string input = Console.ReadLine();
+                switch (input)
+                {
+                    case "1":
+                        abilitiesList = await abilityObj.GetModels(CurrentURL(CharacterModels.Ability));
+                        foreach (Ability item in abilitiesList)
+                        {
+                            Console.WriteLine("Ability ID: " + item.Id);
+                            Console.WriteLine("Ability Name: " + item.Name);
+                            Console.WriteLine("Ability Description: " + item.Desc);
+                            Console.WriteLine("");
+                        }
+                        break;
+                    case "2":
+                        Console.WriteLine("Please select the id of the ability you would like to update: ");
+                        string responseAbility = Console.ReadLine();
+                        int responseInt = Convert.ToInt32(responseAbility);
+                        abilitiesList = await abilityObj.GetModels(CurrentURL(CharacterModels.Ability), responseInt);
+                        Ability ability = new Ability()
+                        {
+                            Id = abilitiesList.First().Id,
+                            Name = abilitiesList.First().Name,
+                            Desc = abilitiesList.First().Desc
+                        };
+                        Console.WriteLine("Please update the name for this ability: ");
+                        string response = Console.ReadLine();
+                        ability.Name = response;
+                        Console.WriteLine("Please update the description for this ability: ");
+                        string response1 = Console.ReadLine();
+                        ability.Desc = response1;
+                        abilityObj.UpdateModel(ability, CurrentURL(CharacterModels.Ability) + $"/{ability.Id}");
+                        break;
+                    case "3":
+                        exit = true;
+                        break;
+                }
+            }
+        }
 
+        static async void UpdateSkill(int id = 0)
+        {
+            CRUD<Skill> SkillObj = new CRUD<Skill>();
+            List<Skill> skillList = new List<Skill>();
+            bool exit = false;
+            while (!exit)
+            {
+                Console.WriteLine("1. View Skills");
+                Console.WriteLine("2. Update an Skill");
+                Console.WriteLine("3. Exit");
+                string input = Console.ReadLine();
+                switch (input)
+                {
+                    case "1":
+                        skillList = await SkillObj.GetModels(CurrentURL(CharacterModels.Skill));
+                        foreach (Skill item in skillList)
+                        {
+                            Console.WriteLine("Skill ID: " + item.ID);
+                            Console.WriteLine("Skill Name: " + item.Name);
+                            Console.WriteLine("Skill Description: " + item.Desc);
+                            Console.WriteLine("");
+                        }
+                        break;
+                    case "2":
+                        Console.WriteLine("Please select the id of the Skill you would like to update: ");
+                        string responseSkill = Console.ReadLine();
+                        int responseInt = Convert.ToInt32(responseSkill);
+                        skillList = await SkillObj.GetModels(CurrentURL(CharacterModels.Skill), responseInt);
+                        Skill Skill = new Skill()
+                        {
+                            ID = skillList.First().ID,
+                            Name = skillList.First().Name,
+                            Desc = skillList.First().Desc
+                        };
+                        Console.WriteLine("Please update the name for this Skill: ");
+                        string response = Console.ReadLine();
+                        Skill.Name = response;
+                        Console.WriteLine("Please update the description for this Skill: ");
+                        string response1 = Console.ReadLine();
+                        Skill.Desc = response1;
+                        SkillObj.UpdateModel(Skill, CurrentURL(CharacterModels.Skill) + $"/{Skill.ID}");
+                        break;
+                    case "3":
+                        exit = true;
+                        break;
+                }
+            }
+        }
+        static async void UpdateRace(int id = 0)
+        {
+            CRUD<Race> RaceObj = new CRUD<Race>();
+            List<Race> RaceList = new List<Race>();
+            bool exit = false;
+            while (!exit)
+            {
+                Console.WriteLine("1. View Races");
+                Console.WriteLine("2. Update an Race");
+                Console.WriteLine("3. Exit");
+                string input = Console.ReadLine();
+                switch (input)
+                {
+                    case "1":
+                        RaceList = await RaceObj.GetModels(CurrentURL(CharacterModels.Race));
+                        foreach (Race item in RaceList)
+                        {
+                            Console.WriteLine("Race ID: " + item.ID);
+                            Console.WriteLine("Race Type: " + item.RaceType);
+                            Console.WriteLine("StatModifier: " + item.StatModifer);
+                            Console.WriteLine("");
+                        }
+                        break;
+                    case "2":
+                        Console.WriteLine("Please select the id of the Race you would like to update: ");
+                        string responseRace = Console.ReadLine();
+                        int responseInt = Convert.ToInt32(responseRace);
+                        RaceList = await RaceObj.GetModels(CurrentURL(CharacterModels.Race), responseInt);
+                        Race Race = new Race()
+                        {
+                            ID = RaceList.First().ID,
+                            RaceType = RaceList.First().RaceType,
+                            StatModifer = RaceList.First().StatModifer
+                        };
+                        Console.WriteLine("Please update the race type: ");
+                        string response = Console.ReadLine();
+                        Race.RaceType = response;
+                        Console.WriteLine("Please update the stat modifier for this Race: ");
+                        string response1 = Console.ReadLine();
+                        int statResponse = Convert.ToInt32(response1);
+                        Race.StatModifer = statResponse;
+                        RaceObj.UpdateModel(Race, CurrentURL(CharacterModels.Race) + $"/{Race.ID}");
+                        break;
+                    case "3":
+                        exit = true;
+                        break;
+                }
+            }
+        }
 
+        static async void UpdateClass(int id = 0)
+        {
+            CRUD<Class> ClassObj = new CRUD<Class>();
+            List<Class> ClassList = new List<Class>();
+            bool exit = false;
+            while (!exit)
+            {
+                Console.WriteLine("1. View Classes");
+                Console.WriteLine("2. Update an Class");
+                Console.WriteLine("3. Exit");
+                string input = Console.ReadLine();
+                switch (input)
+                {
+                    case "1":
+                        ClassList = await ClassObj.GetModels(CurrentURL(CharacterModels.Class));
+                        foreach (Class item in ClassList)
+                        {
+                            Console.WriteLine("Class ID: " + item.ID);
+                            Console.WriteLine("Class Name: " + item.ClassName);
+                            Console.WriteLine("StatModifier: " + item.StatModifier);
+                            Console.WriteLine("");
+                        }
+                        break;
+                    case "2":
+                        Console.WriteLine("Please select the id of the Class you would like to update: ");
+                        string responseClass = Console.ReadLine();
+                        int responseInt = Convert.ToInt32(responseClass);
+                        ClassList = await ClassObj.GetModels(CurrentURL(CharacterModels.Class), responseInt);
+                        Class Class = new Class()
+                        {
+                            ID = ClassList.First().ID,
+                            ClassName = ClassList.First().ClassName,
+                            StatModifier = ClassList.First().StatModifier
+                        };
+                        Console.WriteLine("Please update the class name: ");
+                        string response = Console.ReadLine();
+                        Class.ClassName = response;
+                        Console.WriteLine("Please update the stat modifier for this class: ");
+                        string response1 = Console.ReadLine();
+                        int statResponse = Convert.ToInt32(response1);
+                        Class.StatModifier = statResponse;
+                        ClassObj.UpdateModel(Class, CurrentURL(CharacterModels.Class) + $"/{Class.ID}");
+                        break;
+                    case "3":
+                        exit = true;
+                        break;
+                }
+            }
+        }
 
-
-
+        static async void UpdateCharacter(int id = 0)
+        {
+            CRUD<Character> CharacterObj = new CRUD<Character>();
+            List<Character> CharacterList = new List<Character>();
+            bool exit = false;
+            while (!exit)
+            {
+                Console.WriteLine("1. View Characters");
+                Console.WriteLine("2. Update an Character");
+                Console.WriteLine("3. Exit");
+                string input = Console.ReadLine();
+                switch (input)
+                {
+                    case "1":
+                        CharacterList = await CharacterObj.GetModels(CurrentURL(CharacterModels.Character));
+                        foreach (Character item in CharacterList)
+                        {
+                            Console.WriteLine("Character ID: " + item.Id);
+                            Console.WriteLine("Character Name: " + item.Name);
+                            Console.WriteLine("HP: " + item.HP);
+                            Console.WriteLine("Dex: " + item.Dex);
+                            Console.WriteLine("Strength: " + item.Strength);
+                            Console.WriteLine("");
+                        }
+                        break;
+                    case "2":
+                        Console.WriteLine("Please select the id of the Character you would like to update: ");
+                        string responseCharacter = Console.ReadLine();
+                        int responseInt = Convert.ToInt32(responseCharacter);
+                        CharacterList = await CharacterObj.GetModels(CurrentURL(CharacterModels.Character), responseInt);
+                        Character Character = new Character()
+                        {
+                            Id = CharacterList.First().Id,
+                            Name = CharacterList.First().Name,
+                            HP = CharacterList.First().HP,
+                            Dex = CharacterList.First().Dex,
+                            Strength = CharacterList.First().Strength,
+                            RaceId = CharacterList.First().RaceId,
+                            UserId = CharacterList.First().UserId,
+                            ClassId = CharacterList.First().ClassId,
+                            CharClass = CharacterList.First().CharClass,
+                            CharRace = CharacterList.First().CharRace
+                        };
+                        Console.WriteLine("Please update the Character name: ");
+                        string response = Console.ReadLine();
+                        Character.Name = response;
+                        Console.WriteLine("Please update the HP for this Character: ");
+                        string response1 = Console.ReadLine();
+                        int statResponse = Convert.ToInt32(response1);
+                        Character.HP = statResponse;
+                        Console.WriteLine("Please update the Dex for this Character: ");
+                        string response2 = Console.ReadLine();
+                        int statResponse2 = Convert.ToInt32(response2);
+                        Character.Dex = statResponse2;
+                        Console.WriteLine("Please update the Strength for this Character: ");
+                        string response3 = Console.ReadLine();
+                        int statResponse3 = Convert.ToInt32(response3);
+                        Character.Strength = statResponse3;
+                        CharacterObj.UpdateModel(Character, CurrentURL(CharacterModels.Character) + $"/{Character.Id}");
+                        break;
+                    case "3":
+                        exit = true;
+                        break;
+                }
+            }
+        }
     }//end of class Program
 
     public enum CharacterModels

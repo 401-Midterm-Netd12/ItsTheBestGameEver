@@ -1,21 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\valde\\Source\\Repos\\ItsTheBestGameEver\\TheBestGameEver\\TheBestGameEver.csproj": {}
+    "C:\\Users\\David\\codefellows\\C#401\\MIdTerm\\ItsTheBestGameEver\\TheBestGameEver\\TheBestGameEver.csproj": {}
   },
   "projects": {
-    "C:\\Users\\valde\\Source\\Repos\\ItsTheBestGameEver\\TheBestGameEver\\TheBestGameEver.csproj": {
+    "C:\\Users\\David\\codefellows\\C#401\\MIdTerm\\ItsTheBestGameEver\\TheBestGameEver\\TheBestGameEver.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\valde\\Source\\Repos\\ItsTheBestGameEver\\TheBestGameEver\\TheBestGameEver.csproj",
+        "projectUniqueName": "C:\\Users\\David\\codefellows\\C#401\\MIdTerm\\ItsTheBestGameEver\\TheBestGameEver\\TheBestGameEver.csproj",
         "projectName": "TheBestGameEver",
-        "projectPath": "C:\\Users\\valde\\Source\\Repos\\ItsTheBestGameEver\\TheBestGameEver\\TheBestGameEver.csproj",
-        "packagesPath": "C:\\Users\\valde\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\valde\\Source\\Repos\\ItsTheBestGameEver\\TheBestGameEver\\obj\\",
+        "projectPath": "C:\\Users\\David\\codefellows\\C#401\\MIdTerm\\ItsTheBestGameEver\\TheBestGameEver\\TheBestGameEver.csproj",
+        "packagesPath": "C:\\Users\\David\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\David\\codefellows\\C#401\\MIdTerm\\ItsTheBestGameEver\\TheBestGameEver\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Microsoft\\Xamarin\\NuGet\\"
+        ],
         "configFilePaths": [
-          "C:\\Users\\valde\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\David\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
