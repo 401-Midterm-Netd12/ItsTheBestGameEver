@@ -25,9 +25,7 @@ C:\Users\AlanY\Documents\Projects\Code Fellows 401\Midterm Project Console\TheBe
 C:\Users\AlanY\Documents\Projects\Code Fellows 401\Midterm Project Console\TheBestGameEver\bin\Debug\netcoreapp3.1\TheBestGameEver.runtimeconfig.dev.json
 C:\Users\AlanY\Documents\Projects\Code Fellows 401\Midterm Project Console\TheBestGameEver\bin\Debug\netcoreapp3.1\TheBestGameEver.dll
 C:\Users\AlanY\Documents\Projects\Code Fellows 401\Midterm Project Console\TheBestGameEver\bin\Debug\netcoreapp3.1\TheBestGameEver.pdb
-C:\Users\AlanY\Documents\Projects\Code Fellows 401\Midterm Project Console\TheBestGameEver\bin\Debug\netcoreapp3.1\System.Net.Http.Formatting.dll
 C:\Users\AlanY\Documents\Projects\Code Fellows 401\Midterm Project Console\TheBestGameEver\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
-C:\Users\AlanY\Documents\Projects\Code Fellows 401\Midterm Project Console\TheBestGameEver\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll
 C:\Users\AlanY\Documents\Projects\Code Fellows 401\Midterm Project Console\TheBestGameEver\obj\Debug\netcoreapp3.1\TheBestGameEver.csproj.CopyComplete
 C:\Users\AlanY\Documents\Projects\Code Fellows 401\Midterm Project Console\TheBestGameEver\obj\Debug\netcoreapp3.1\TheBestGameEver.dll
 C:\Users\AlanY\Documents\Projects\Code Fellows 401\Midterm Project Console\TheBestGameEver\obj\Debug\netcoreapp3.1\TheBestGameEver.pdb
