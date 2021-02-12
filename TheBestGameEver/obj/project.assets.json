@@ -1840,19 +1840,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\valde\\.nuget\\packages\\": {}
+    "C:\\Users\\AlanY\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\valde\\source\\repos\\ItsTheBestGameEver\\TheBestGameEver\\TheBestGameEver.csproj",
+      "projectUniqueName": "C:\\Users\\AlanY\\Documents\\Projects\\Code Fellows 401\\Midterm Project Console\\TheBestGameEver\\TheBestGameEver.csproj",
       "projectName": "TheBestGameEver",
-      "projectPath": "C:\\Users\\valde\\source\\repos\\ItsTheBestGameEver\\TheBestGameEver\\TheBestGameEver.csproj",
-      "packagesPath": "C:\\Users\\valde\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\valde\\source\\repos\\ItsTheBestGameEver\\TheBestGameEver\\obj\\",
+      "projectPath": "C:\\Users\\AlanY\\Documents\\Projects\\Code Fellows 401\\Midterm Project Console\\TheBestGameEver\\TheBestGameEver.csproj",
+      "packagesPath": "C:\\Users\\AlanY\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\AlanY\\Documents\\Projects\\Code Fellows 401\\Midterm Project Console\\TheBestGameEver\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\valde\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\AlanY\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -1906,7 +1906,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.102\\RuntimeIdentifierGraph.json"
       }
     }
   }

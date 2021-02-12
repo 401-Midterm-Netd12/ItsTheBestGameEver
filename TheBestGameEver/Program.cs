@@ -22,7 +22,14 @@ namespace TheBestGameEver
         static string URL = "https://customcharacter1.azurewebsites.net";
         static HttpWebRequest WebReq;
         static HttpWebResponse WebResp;
-        static void Main(string[] args)
+        static CRUD<Character> CRUDCharacter = new CRUD<Character>();
+        static CRUD<Race> CRUDRace = new CRUD<Race>();
+        static CRUD<Skill> CRUDSkill = new CRUD<Skill>();
+        static CRUD<Class> CRUDClass = new CRUD<Class>();
+        static CRUD<Ability> CRUDAbility = new CRUD<Ability>();
+
+
+    static void Main(string[] args)
         {
             client.BaseAddress = new Uri(URL);
             client.DefaultRequestHeaders.Accept.Clear();
@@ -32,9 +39,9 @@ namespace TheBestGameEver
             /* === Menu Commands === */
 
             Console.ForegroundColor = ConsoleColor.White;
-            //LoginMenu();
+            LoginMenu();
   
-           CreateACharacterMenu();
+           //CreateACharacterMenu();
 
         }
 
@@ -304,13 +311,14 @@ namespace TheBestGameEver
             } while (!exit);
         }
 
-        public static string CreateACharacterMenu()
+        public static void CreateACharacterMenu()
         {
-            bool exit = false;
+            bool exit;
             string userChoice;
 
             do
             {
+                exit = true;
                 ScreenHeaderDisplay();
                 CenterConsoleText(26);
                 Console.WriteLine($"{globalUser}, what would you like to do?\n");
@@ -348,32 +356,37 @@ namespace TheBestGameEver
                 switch (userChoice)
                 {
                     case "1":
-                        ModelSubMenus("Character");
+                        userChoice = "Character";
                         break;
                     case "2":
-                        ModelSubMenus("Race");
+                        userChoice = "Race";
                         break;
                     case "3":
-                        ModelSubMenus("Class");
+                        userChoice = "Class";
                         break;
                     case "4":
-                        ModelSubMenus("Ability");
+                        userChoice = "Ability";
                         break;
                     case "5":
-                        ModelSubMenus("Skill");
+                        userChoice = "Skill";
                         break;
                     case "6":
-                        exit = true;
-                        return "";
+                        userChoice = "Exit";
+                        break;
                     default:
                         InvalidSelection();
+                        exit = false;
                         break;
                 }
             } while (!exit);
-            return "";
-        }
+            
+            if(userChoice != "Exit")
+            { 
+              ModelSubMenus(userChoice);
+            }
+      }
 
-        public static void ModelSubMenus(string model)
+      public static void ModelSubMenus(string model)
         {
             bool exit = false;
             string userChoice;
@@ -473,11 +486,12 @@ namespace TheBestGameEver
                         Console.Clear();
                         PushScreenDown(2);
                         ConsoleHeader();
-                        //Console.WriteLine($"Please enter the ID of the {model} you would like to update.");
-                        //int userSelection = Convert.ToInt32(Console.ReadLine());
                         UpdateSwitch(model);
                         break;
                     case "5":
+                        Console.Clear();
+                        PushScreenDown(2);
+                        ConsoleHeader();
                         DeleteSwitch(model);
                         break;
                     case "6":
@@ -659,170 +673,86 @@ namespace TheBestGameEver
         static async void AbilityDisplay(int id = 0)
         {
             List<Ability> abilityList = new List<Ability>();
-            CRUD<Ability> abilityObj = new CRUD<Ability>();
-            abilityList = await abilityObj.GetModels(CurrentURL(CharacterModels.Ability), id);
+            abilityList = await CRUDAbility.GetModels(CurrentURL(CharacterModels.Ability), id);
             foreach (Ability item in abilityList)
             {
-                Console.BackgroundColor = ConsoleColor.White;
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.Write("ID: ");
-                Console.BackgroundColor = ConsoleColor.Black;
-                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write("\tID: ");
                 Console.WriteLine(item.Id);
-                Console.BackgroundColor = ConsoleColor.White;
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.Write("Name: ");
-                Console.BackgroundColor = ConsoleColor.Black;
-                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write("\tName: ");
                 Console.WriteLine(item.Name);
-                Console.BackgroundColor = ConsoleColor.White;
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.Write("Desc: ");
-                Console.BackgroundColor = ConsoleColor.Black;
-                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write("\tDesc: ");
                 Console.WriteLine(item.Desc);
-
+                PushScreenDown(2);
             }
         }
         static async void SkillDisplay(int id = 0) // pulled all ids so far
         {
             List<Skill> skillList = new List<Skill>();
-            CRUD<Skill> skillObj = new CRUD<Skill>();
-            skillList = await skillObj.GetModels(CurrentURL(CharacterModels.Skill), id);
+            skillList = await CRUDSkill.GetModels(CurrentURL(CharacterModels.Skill), id);
             foreach (Skill item in skillList)
             {
-                Console.BackgroundColor = ConsoleColor.White;
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.Write("ID: ");
-                Console.BackgroundColor = ConsoleColor.Black;
-                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write("\tID: ");
                 Console.WriteLine(item.ID);
-                Console.BackgroundColor = ConsoleColor.White;
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.Write("Name: ");
-                Console.BackgroundColor = ConsoleColor.Black;
-                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write("\tName: ");
                 Console.WriteLine(item.Name);
-                Console.BackgroundColor = ConsoleColor.White;
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.Write("Desc: ");
-                Console.BackgroundColor = ConsoleColor.Black;
-                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write("\tDesc: ");
                 Console.WriteLine(item.Desc);
-            }
-        }
+                PushScreenDown(2);
+      }
+    }
         static async void RaceDisplay(int id = 0)
         {
             List<Race> raceList = new List<Race>();
-            CRUD<Race> raceObj = new CRUD<Race>();
-            raceList = await raceObj.GetModels(CurrentURL(CharacterModels.Race), id);
+            raceList = await CRUDRace.GetModels(CurrentURL(CharacterModels.Race), id);
             foreach (Race item in raceList)
             {
-                Console.BackgroundColor = ConsoleColor.White;
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.Write("ID: ");
-                Console.BackgroundColor = ConsoleColor.Black;
-                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write("\tID: ");
                 Console.WriteLine(item.ID);
-                Console.BackgroundColor = ConsoleColor.White;
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.Write("Race Type: ");
-                Console.BackgroundColor = ConsoleColor.Black;
-                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write("\tRace Type: ");
                 Console.WriteLine(item.RaceType);
-                Console.BackgroundColor = ConsoleColor.White;
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.Write("Stat Modifier: ");
-                Console.BackgroundColor = ConsoleColor.Black;
-                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write("\tStat Modifier: ");
                 Console.WriteLine(item.StatModifer);
-            }
-        }
+                PushScreenDown(2);
+      }
+    }
         static async void ClassDisplay(int id = 0)
         {
             List<Class> classList = new List<Class>();
-            CRUD<Class> classObj = new CRUD<Class>();
-            classList = await classObj.GetModels(CurrentURL(CharacterModels.Class), id);
+            classList = await CRUDClass.GetModels(CurrentURL(CharacterModels.Class), id);
             foreach (Class item in classList)
             {
-                Console.BackgroundColor = ConsoleColor.White;
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.Write("ID: ");
-                Console.BackgroundColor = ConsoleColor.Black;
-                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write("\tID: ");
                 Console.WriteLine(item.ID);
-                Console.BackgroundColor = ConsoleColor.White;
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.Write("Name: ");
-                Console.BackgroundColor = ConsoleColor.Black;
-                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write("\tName: ");
                 Console.WriteLine(item.ClassName);
-                Console.BackgroundColor = ConsoleColor.White;
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.Write("Stat Modifier: ");
-                Console.BackgroundColor = ConsoleColor.Black;
-                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write("\tStat Modifier: ");
                 Console.WriteLine(item.StatModifier);
-                Console.BackgroundColor = ConsoleColor.White;
-                Console.ForegroundColor = ConsoleColor.Blue;
-            }
-            Console.BackgroundColor = ConsoleColor.Black;
-            Console.ForegroundColor = ConsoleColor.White;
-        }
+                PushScreenDown(2);
+      }
+    }
 
         static async void CharacterDisplay(int id = 0)
         {
             List<Character> characterList = new List<Character>();
-            CRUD<Character> characterObj = new CRUD<Character>();
-            characterList = await characterObj.GetModels(CurrentURL(CharacterModels.Character), id);
+            characterList = await CRUDCharacter.GetModels(CurrentURL(CharacterModels.Character), id);
             foreach (Character item in characterList)
             {
-                Console.BackgroundColor = ConsoleColor.White;
-                Console.ForegroundColor = ConsoleColor.Blue;
                 Console.WriteLine();
-                Console.Write("ID: ");
-                Console.BackgroundColor = ConsoleColor.Black;
-                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write("\tID: ");
                 Console.WriteLine(item.Id);
-                Console.BackgroundColor = ConsoleColor.White;
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.Write("UserName: ");
-                Console.BackgroundColor = ConsoleColor.Black;
-                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write("\tUserName: ");
                 Console.WriteLine(item.Name);
-                Console.BackgroundColor = ConsoleColor.White;
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.Write("RaceId: ");
-                Console.BackgroundColor = ConsoleColor.Black;
-                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write("\tRaceId: ");
                 Console.WriteLine(item.RaceId);
-                Console.Write("ClassId: ");
-                Console.BackgroundColor = ConsoleColor.Black;
-                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write("\tClassId: ");
                 Console.WriteLine(item.ClassId);
-                Console.BackgroundColor = ConsoleColor.White;
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.Write("UserId: ");
-                Console.BackgroundColor = ConsoleColor.Black;
-                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write("\tUserId: ");
                 Console.WriteLine(item.UserId);
-                Console.BackgroundColor = ConsoleColor.White;
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.Write("HP: ");
-                Console.BackgroundColor = ConsoleColor.Black;
-                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write("\tHP: ");
                 Console.WriteLine(item.HP);
-                Console.BackgroundColor = ConsoleColor.White;
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.Write("Dex: ");
-                Console.BackgroundColor = ConsoleColor.Black;
-                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write("\tDex: ");
                 Console.WriteLine(item.Dex);
-                Console.BackgroundColor = ConsoleColor.White;
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.Write("Strength: ");
-                Console.BackgroundColor = ConsoleColor.Black;
-                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write("\tStrength: ");
                 Console.WriteLine(item.Strength);
                 Console.WriteLine();
                 
@@ -834,12 +764,12 @@ namespace TheBestGameEver
         static async void DeleteCharacter(int id = 0)
         {
             bool exit = false;
-            CRUD<Character> characterObj = new CRUD<Character>();
             while (!exit)
             {
-                Console.WriteLine("1. View Characters");
-                Console.WriteLine("2. Delete a Character");
-                Console.WriteLine("3. Exit");
+                Console.WriteLine("\t1. View Characters");
+                Console.WriteLine("\t2. Delete a Character");
+                Console.WriteLine("\t3. Exit\n");
+                Console.Write("\t");
                 string input = Console.ReadLine();
                 switch (input)
                 {
@@ -848,10 +778,10 @@ namespace TheBestGameEver
                         CharacterDisplay(id);
                         break;
                     case "2":
-                        Console.WriteLine("Please enter an Id to delete: ");
+                        Console.WriteLine("\tPlease enter an Id to delete: ");
                         string response = Console.ReadLine();
                         int answerToInt = Convert.ToInt32(response);
-                        await characterObj.DeleteModels(answerToInt, CurrentURL(CharacterModels.Character));
+                        await CRUDCharacter.DeleteModels(answerToInt, CurrentURL(CharacterModels.Character));
                         break;
                     case "3":
                         exit = true;
@@ -862,12 +792,12 @@ namespace TheBestGameEver
         static async void DeleteClass(int id = 0)
         {
             bool exit = false;
-            CRUD<Class> classObj = new CRUD<Class>();
             while (!exit)
             {
-                Console.WriteLine("1. View Classes");
-                Console.WriteLine("2. Delete a Class");
-                Console.WriteLine("3. Exit");
+                Console.WriteLine("\t1. View Classes");
+                Console.WriteLine("\t2. Delete a Class");
+                Console.WriteLine("\t3. Exit\n");
+                Console.Write("\t");
                 string input = Console.ReadLine();
                 switch (input)
                 {
@@ -876,10 +806,10 @@ namespace TheBestGameEver
                         ClassDisplay(id);
                         break;
                     case "2":
-                        Console.WriteLine("Please enter an Id to delete: ");
+                        Console.WriteLine("\tPlease enter an Id to delete: ");
                         string response = Console.ReadLine();
                         int answerToInt = Convert.ToInt32(response);
-                        await classObj.DeleteModels(answerToInt, CurrentURL(CharacterModels.Class));
+                        await CRUDClass.DeleteModels(answerToInt, CurrentURL(CharacterModels.Class));
                         break;
                     case "3":
                         exit = true;
@@ -891,12 +821,12 @@ namespace TheBestGameEver
         static async void DeleteSkill(int id = 0)
         {
             bool exit = false;
-            CRUD<Skill> skillObj = new CRUD<Skill>();
             while (!exit)
             {
-                Console.WriteLine("1. View Skills");
-                Console.WriteLine("2. Delete a Skill");
-                Console.WriteLine("3. Exit");
+                Console.WriteLine("\t1. View Skills");
+                Console.WriteLine("\t2. Delete a Skill");
+                Console.WriteLine("\t3. Exit\n");
+                Console.Write("\t");
                 string input = Console.ReadLine();
                 switch (input)
                 {
@@ -906,10 +836,10 @@ namespace TheBestGameEver
                     
                         break;
                     case "2":
-                        Console.WriteLine("Please enter an Id to delete: ");
+                        Console.WriteLine("\tPlease enter an Id to delete: ");
                         string response = Console.ReadLine();
                         int answerToInt = Convert.ToInt32(response);
-                        await skillObj.DeleteModels(answerToInt, CurrentURL(CharacterModels.Skill));
+                        await CRUDSkill.DeleteModels(answerToInt, CurrentURL(CharacterModels.Skill));
                         break;
                     case "3":
                         exit = true;
@@ -920,12 +850,12 @@ namespace TheBestGameEver
         static async void DeleteAbility(int id = 0)
         {
             bool exit = false;
-            CRUD<Ability> abilityObj = new CRUD<Ability>();
             while (!exit)
             {
-                Console.WriteLine("1. View Abilities");
-                Console.WriteLine("2. Delete an Ability");
-                Console.WriteLine("3. Exit");
+                Console.WriteLine("\t1. View Abilities");
+                Console.WriteLine("\t2. Delete an Ability");
+                Console.WriteLine("\t3. Exit\n");
+                Console.Write("\t");
                 string input = Console.ReadLine();
                 switch (input)
                 {
@@ -935,10 +865,10 @@ namespace TheBestGameEver
                     
                         break;
                     case "2":
-                        Console.WriteLine("Please enter an Id to delete: ");
+                        Console.WriteLine("\tPlease enter an Id to delete: ");
                         string response = Console.ReadLine();
                         int answerToInt = Convert.ToInt32(response);
-                        await abilityObj.DeleteModels(answerToInt, CurrentURL(CharacterModels.Ability));
+                        await CRUDAbility.DeleteModels(answerToInt, CurrentURL(CharacterModels.Ability));
                         break;
                     case "3":
                         exit = true;
@@ -950,12 +880,12 @@ namespace TheBestGameEver
         static async void DeleteRace(int id = 0)
         {
             bool exit = false;
-            CRUD<Race> raceObj = new CRUD<Race>();
             while (!exit)
             {
-                Console.WriteLine("1. View Races");
-                Console.WriteLine("2. Delete a Race");
-                Console.WriteLine("3. Exit");
+                Console.WriteLine("\t1. View Races");
+                Console.WriteLine("\t2. Delete a Race");
+                Console.WriteLine("\t3. Exit\n");
+                Console.Write("\t");
                 string input = Console.ReadLine();
                 switch (input)
                 {
@@ -965,10 +895,10 @@ namespace TheBestGameEver
                     
                         break;
                     case "2":
-                        Console.WriteLine("Please enter an Id to delete: ");
+                        Console.WriteLine("\tPlease enter an Id to delete: ");
                         string response = Console.ReadLine();
                         int answerToInt = Convert.ToInt32(response);
-                        await raceObj.DeleteModels(answerToInt, CurrentURL(CharacterModels.Race));
+                        await CRUDRace.DeleteModels(answerToInt, CurrentURL(CharacterModels.Race));
                         break;
                     case "3":
                         exit = true;
@@ -983,37 +913,39 @@ namespace TheBestGameEver
 
         static async void CreateAbility(int id = 0)
         {
-            CRUD<Ability> abilityObj = new CRUD<Ability>();
             List<Ability> abilitiesList = new List<Ability>();
             Ability ability = new Ability();
             bool exit = false;
             while (!exit)
             {
-                Console.WriteLine("1. View Abilities");
-                Console.WriteLine("2. Create an Ability");
-                Console.WriteLine("3. Exit");
-                string input = Console.ReadLine();
+                Console.WriteLine("\t1. View Abilities");
+                Console.WriteLine("\t2. Create an Ability");
+                Console.WriteLine("\t3. Exit");
+        Console.Write("\t");
+        string input = Console.ReadLine();
                 switch (input)
                 {
                     case "1":
-                        abilitiesList = await abilityObj.GetModels(CurrentURL(CharacterModels.Ability));
+                        abilitiesList = await CRUDAbility.GetModels(CurrentURL(CharacterModels.Ability));
                         foreach (Ability item in abilitiesList)
                         {
                             Console.WriteLine("");
-                            Console.WriteLine("Ability Name: " + item.Name);
-                            Console.WriteLine("Ability Description: " + item.Desc);
+                            Console.WriteLine("\tAbility Name: " + item.Name);
+                            Console.WriteLine("\tAbility Description: " + item.Desc);
                             Console.WriteLine("");
 
                         }
                         break;
                     case "2":
-                        Console.WriteLine("Please create a name for this ability: ");
-                        string response = Console.ReadLine();
+                        Console.WriteLine("\tPlease create a name for this ability: ");
+            Console.Write("\t");
+            string response = Console.ReadLine();
                         ability.Name = response;
-                        Console.WriteLine("Please create a description for this ability: ");
-                        string response1 = Console.ReadLine();
+                        Console.WriteLine("\tPlease create a description for this ability: ");
+            Console.Write("\t");
+            string response1 = Console.ReadLine();
                         ability.Desc = response1;
-                        abilityObj.CreateModel(ability, CurrentURL(CharacterModels.Ability));
+                        CRUDAbility.CreateModel(ability, CurrentURL(CharacterModels.Ability));
                         break;
                     case "3":
                         exit = true;
@@ -1023,37 +955,39 @@ namespace TheBestGameEver
         }
         static async void CreateSkill()
         {
-            CRUD<Skill> skillObj = new CRUD<Skill>();
             List<Skill> skillList = new List<Skill>();
             Skill skill = new Skill();
             bool exit = false;
             while (!exit)
             {
-                Console.WriteLine("1. View Skills");
-                Console.WriteLine("2. Create a Skill");
-                Console.WriteLine("3. Exit");
-                string input = Console.ReadLine();
+                Console.WriteLine("\t1. View Skills");
+                Console.WriteLine("\t2. Create a Skill");
+                Console.WriteLine("\t3. Exit");
+        Console.Write("\t");
+        string input = Console.ReadLine();
                 switch (input)
                 {
                     case "1":
-                        skillList = await skillObj.GetModels(CurrentURL(CharacterModels.Skill));
+                        skillList = await CRUDSkill.GetModels(CurrentURL(CharacterModels.Skill));
                         foreach (Skill item in skillList)
                         {
                             Console.WriteLine("");
-                            Console.WriteLine("Skill Name: " + item.Name);
-                            Console.WriteLine("Skill Description: " + item.Desc);
+                            Console.WriteLine("\tSkill Name: " + item.Name);
+                            Console.WriteLine("\tSkill Description: " + item.Desc);
                             Console.WriteLine("");
 
                         }
                         break;
                     case "2":
-                        Console.WriteLine("Please create a name for this skill: ");
-                        string response = Console.ReadLine();
+                        Console.WriteLine("\tPlease create a name for this skill: ");
+            Console.Write("\t");
+            string response = Console.ReadLine();
                         skill.Name = response;
-                        Console.WriteLine("Please create a description for this skill: ");
-                        string response1 = Console.ReadLine();
+                        Console.WriteLine("\tPlease create a description for this skill: ");
+            Console.Write("\t");
+            string response1 = Console.ReadLine();
                         skill.Desc = response1;
-                        skillObj.CreateModel(skill, CurrentURL(CharacterModels.Skill));
+                        CRUDSkill.CreateModel(skill, CurrentURL(CharacterModels.Skill));
                         break;
                     case "3":
                         exit = true;
@@ -1063,38 +997,40 @@ namespace TheBestGameEver
         }
         static async void CreateRace()
         {
-            CRUD<Race> raceObj = new CRUD<Race>();
             List<Race> raceList = new List<Race>();
             Race race = new Race();
             bool exit = false;
             while (!exit)
             {
-                Console.WriteLine("1. View Races");
-                Console.WriteLine("2. Create a Race");
-                Console.WriteLine("3. Exit");
-                string input = Console.ReadLine();
+                Console.WriteLine("\t1. View Races");
+                Console.WriteLine("\t2. Create a Race");
+                Console.WriteLine("\t3. Exit");
+        Console.Write("\t");
+        string input = Console.ReadLine();
                 switch (input)
                 {
                     case "1":
-                        raceList = await raceObj.GetModels(CurrentURL(CharacterModels.Race));
+                        raceList = await CRUDRace.GetModels(CurrentURL(CharacterModels.Race));
                         foreach (Race item in raceList)
                         {
                             Console.WriteLine("");
-                            Console.WriteLine("Race: " + item.RaceType);
-                            Console.WriteLine("StatModifier: " + item.StatModifer);
+                            Console.WriteLine("\tRace: " + item.RaceType);
+                            Console.WriteLine("\tStatModifier: " + item.StatModifer);
                             Console.WriteLine("");
 
                         }
                         break;
                     case "2":
-                        Console.WriteLine("Please create a race: ");
-                        string response1 = Console.ReadLine();
+                        Console.WriteLine("\tPlease create a race: ");
+            Console.Write("\t");
+            string response1 = Console.ReadLine();
                         race.RaceType = response1;
-                        Console.WriteLine("Please create a stat modifier(number 1-10): ");
-                        string response = Console.ReadLine();
+                        Console.WriteLine("\tPlease create a stat modifier(number 1-10): ");
+            Console.Write("\t");
+            string response = Console.ReadLine();
                         int response2 = Convert.ToInt32(response);
                         race.StatModifer = response2;
-                        raceObj.CreateModel(race, CurrentURL(CharacterModels.Race));
+                        CRUDRace.CreateModel(race, CurrentURL(CharacterModels.Race));
                         break;
                     case "3":
                         exit = true;
@@ -1104,37 +1040,39 @@ namespace TheBestGameEver
         }
         static async void CreateClass()
         {
-            CRUD<Class> classObj = new CRUD<Class>();
             List<Class> ClassList = new List<Class>();
             Class testClass = new Class();
             bool exit = false;
             while (!exit)
             {
-                Console.WriteLine("1. View Class");
-                Console.WriteLine("2. Create a Class");
-                Console.WriteLine("3. Exit");
-                string input = Console.ReadLine();
+                Console.WriteLine("\t1. View Class");
+                Console.WriteLine("\t2. Create a Class");
+                Console.WriteLine("\t3. Exit");
+        Console.Write("\t");
+        string input = Console.ReadLine();
                 switch (input)
                 {
                     case "1":
-                        ClassList = await classObj.GetModels(CurrentURL(CharacterModels.Class));
+                        ClassList = await CRUDClass.GetModels(CurrentURL(CharacterModels.Class));
                         foreach (Class item in ClassList)
                         {
                             Console.WriteLine("");
-                            Console.WriteLine("Class Name: " + item.ClassName);
-                            Console.WriteLine("StatModifier: " + item.StatModifier);
+                            Console.WriteLine("\tClass Name: " + item.ClassName);
+                            Console.WriteLine("\tStatModifier: " + item.StatModifier);
                             Console.WriteLine("");
                         }
                         break;
                     case "2":
-                        Console.WriteLine("Please create a Class: ");
-                        string response1 = Console.ReadLine();
+                        Console.WriteLine("\tPlease create a Class: ");
+            Console.Write("\t");
+            string response1 = Console.ReadLine();
                         testClass.ClassName = response1;
-                        Console.WriteLine("Please create a stat modifier(number 1-10): ");
-                        string response = Console.ReadLine();
+                        Console.WriteLine("\tPlease create a stat modifier(number 1-10): ");
+            Console.Write("\t");
+            string response = Console.ReadLine();
                         int response2 = Convert.ToInt32(response);
                         testClass.StatModifier = response2;
-                        classObj.CreateModel(testClass, CurrentURL(CharacterModels.Class));
+                        CRUDClass.CreateModel(testClass, CurrentURL(CharacterModels.Class));
                         break;
                     case "3":
                         exit = true;
@@ -1144,46 +1082,43 @@ namespace TheBestGameEver
         }
         static async void CreateCharacter()
         {
-            CRUD<Character> characterObj = new CRUD<Character>();
             List<Character> characterList = new List<Character>();
-            CRUD<Race> raceObj = new CRUD<Race>();
             List<Race> raceList = new List<Race>();
-            CRUD<Class> classObj = new CRUD<Class>();
             List<Class> classList = new List<Class>();
             Character testCharacter = new Character();
             bool exit = false;
             while (!exit)
             {
-                Console.WriteLine("1. View Character");
-                Console.WriteLine("2. View Race IDs");
-                Console.WriteLine("3. View Class IDs");
-                Console.WriteLine("4. Create a Character (we recommend viewing races and classes first!)");
-                Console.WriteLine("5. Exit");
-                string input = Console.ReadLine();
+                Console.WriteLine("\t1. View Character");
+                Console.WriteLine("\t2. View Race IDs");
+                Console.WriteLine("\t3. View Class IDs");
+                Console.WriteLine("\t4. Create a Character (we recommend viewing races and classes first!)");
+                Console.WriteLine("\t5. Exit");
+        Console.Write("\t");
+        string input = Console.ReadLine();
                 switch (input)
                 {
                     case "1":
-                        characterList = await characterObj.GetModels(CurrentURL(CharacterModels.Character));
+                        characterList = await CRUDCharacter.GetModels(CurrentURL(CharacterModels.Character));
                         foreach (Character item in characterList)
                         {
                             Console.WriteLine("");
-                            Console.WriteLine("Character Name: " + item.Name);
-                            Console.WriteLine("HP: " + item.HP);
-                            Console.WriteLine("Dexterity: " + item.Dex);
-                            Console.WriteLine("Strength: " + item.Strength);
-                            Console.WriteLine($"Created By: {globalUser}");
+                            Console.WriteLine("\tCharacter Name: " + item.Name);
+                            Console.WriteLine("\tHP: " + item.HP);
+                            Console.WriteLine("\tDexterity: " + item.Dex);
+                            Console.WriteLine("\tStrength: " + item.Strength);
                             Console.WriteLine("");
 
                         }
                         break;
                     case "2":
-                        raceList = await raceObj.GetModels(CurrentURL(CharacterModels.Race));
+                        raceList = await CRUDRace.GetModels(CurrentURL(CharacterModels.Race));
                         foreach (Race item in raceList)
                         {
                             Console.WriteLine("");
-                            Console.WriteLine("Race: " + item.RaceType);
+                            Console.WriteLine("\tRace: " + item.RaceType);
                             Console.ForegroundColor = ConsoleColor.Cyan;
-                            Console.Write("RaceID: ");
+                            Console.Write("\tRaceID: ");
                             Console.ForegroundColor = ConsoleColor.White;
                             Console.WriteLine(item.ID);
                             Console.WriteLine("");
@@ -1191,13 +1126,13 @@ namespace TheBestGameEver
                         }
                         break;
                     case "3":
-                        classList = await classObj.GetModels(CurrentURL(CharacterModels.Class));
+                        classList = await CRUDClass.GetModels(CurrentURL(CharacterModels.Class));
                         foreach (Class item in classList)
                         {
                             Console.WriteLine("");
-                            Console.WriteLine("Class: " + item.ClassName);
+                            Console.WriteLine("\tClass: " + item.ClassName);
                             Console.ForegroundColor = ConsoleColor.Cyan;
-                            Console.Write("ClassID: ");
+                            Console.Write("\tClassID: ");
                             Console.ForegroundColor = ConsoleColor.White;
                             Console.WriteLine(item.ID);
                             Console.WriteLine("");
@@ -1205,33 +1140,39 @@ namespace TheBestGameEver
                         }
                         break;
                     case "4":
-                        Console.WriteLine("Please create a new character name: ");
-                        string response = Console.ReadLine();
+                        Console.WriteLine("\tPlease create a new character name: ");
+            Console.Write("\t");
+            string response = Console.ReadLine();
                         testCharacter.Name = response;
-                        Console.WriteLine("Please select a race ID (hint: you can find this in option 3): ");
-                        string response2 = Console.ReadLine();
+                        Console.WriteLine("\tPlease select a race ID (hint: you can find this in option 3): ");
+            Console.Write("\t");
+            string response2 = Console.ReadLine();
                         int responseToInt2 = Convert.ToInt32(response2);
                         testCharacter.RaceId = responseToInt2;
-                        Console.WriteLine("Please select a class ID (hint: you can find this in option 2): ");
-                        string response1 = Console.ReadLine();
+                        Console.WriteLine("\tPlease select a class ID (hint: you can find this in option 2): ");
+            Console.Write("\t");
+            string response1 = Console.ReadLine();
                         int responseToInt = Convert.ToInt32(response1);
                         testCharacter.ClassId = responseToInt;
-                        Console.WriteLine("Please select an HP (enter a number between 1-10): ");
-                        string response3 = Console.ReadLine();
+                        Console.WriteLine("\tPlease select an HP (enter a number between 1-10): ");
+            Console.Write("\t");
+            string response3 = Console.ReadLine();
                         int responseToInt3 = Convert.ToInt32(response3);
                         testCharacter.HP = responseToInt3;
-                        Console.WriteLine("Please select a Dexterity (enter a number between 1-10): ");
-                        string response4 = Console.ReadLine();
+                        Console.WriteLine("\tPlease select a Dexterity (enter a number between 1-10): ");
+            Console.Write("\t");
+            string response4 = Console.ReadLine();
                         int responseToInt4 = Convert.ToInt32(response4);
                         testCharacter.Dex = responseToInt4;
-                        Console.WriteLine("Please select a Strength (enter a number between 1-20): ");
-                        string response5 = Console.ReadLine();
+                        Console.WriteLine("\tPlease select a Strength (enter a number between 1-20): ");
+            Console.Write("\t");
+            string response5 = Console.ReadLine();
                         int responseToInt5 = Convert.ToInt32(response5);
                         testCharacter.Strength = responseToInt5;
                         testCharacter.UserId = globalUserId;
                         testCharacter.CharClass = new Class { };
                         testCharacter.CharRace = new Race { };
-                        characterObj.CreateModel(testCharacter, CurrentURL(CharacterModels.Character));
+                        CRUDCharacter.CreateModel(testCharacter, CurrentURL(CharacterModels.Character));
                         break;
                     case "5":
                         exit = true;
@@ -1245,49 +1186,52 @@ namespace TheBestGameEver
         /*=========================================================================================================================*/
         static async void UpdateAbility(int id = 0)
         {
-            CRUD<Ability> abilityObj = new CRUD<Ability>();
             List<Ability> abilitiesList = new List<Ability>();
             bool exit = false;
             while (!exit)
             {
-                Console.WriteLine("1. View Abilities");
-                Console.WriteLine("2. Update an Ability");
-                Console.WriteLine("3. Exit");
-                string input = Console.ReadLine();
+                Console.WriteLine("\t1. View Abilities");
+                Console.WriteLine("\t2. Update an Ability");
+                Console.WriteLine("\t3. Exit");
+        Console.Write("\t");
+        string input = Console.ReadLine();
                 switch (input)
                 {
                     case "1":
-                        abilitiesList = await abilityObj.GetModels(CurrentURL(CharacterModels.Ability));
+                        abilitiesList = await CRUDAbility.GetModels(CurrentURL(CharacterModels.Ability));
                         foreach (Ability item in abilitiesList)
                         {
                             Console.WriteLine("");
                             Console.ForegroundColor = ConsoleColor.Cyan;
-                            Console.Write("Ability ID: ");
+                            Console.Write("\tAbility ID: ");
                             Console.ForegroundColor = ConsoleColor.White;
                             Console.WriteLine(item.Id);
-                            Console.WriteLine("Ability Name: " + item.Name);
-                            Console.WriteLine("Ability Description: " + item.Desc);
+                            Console.WriteLine("\tAbility Name: " + item.Name);
+                            Console.WriteLine("\tAbility Description: " + item.Desc);
                             Console.WriteLine("");
                         }
                         break;
                     case "2":
                         Console.WriteLine("Please select the id of the ability you would like to update: ");
-                        string responseAbility = Console.ReadLine();
+            Console.Write("\t");
+            string responseAbility = Console.ReadLine();
                         int responseInt = Convert.ToInt32(responseAbility);
-                        abilitiesList = await abilityObj.GetModels(CurrentURL(CharacterModels.Ability), responseInt);
+                        abilitiesList = await CRUDAbility.GetModels(CurrentURL(CharacterModels.Ability), responseInt);
                         Ability ability = new Ability()
                         {
                             Id = abilitiesList.First().Id,
                             Name = abilitiesList.First().Name,
                             Desc = abilitiesList.First().Desc
                         };
-                        Console.WriteLine("Please update the name for this ability: ");
-                        string response = Console.ReadLine();
+                        Console.WriteLine("\tPlease update the name for this ability: ");
+            Console.Write("\t");
+            string response = Console.ReadLine();
                         ability.Name = response;
-                        Console.WriteLine("Please update the description for this ability: ");
-                        string response1 = Console.ReadLine();
+                        Console.WriteLine("\tPlease update the description for this ability: ");
+            Console.Write("\t");
+            string response1 = Console.ReadLine();
                         ability.Desc = response1;
-                        abilityObj.UpdateModel(ability, CurrentURL(CharacterModels.Ability) + $"/{ability.Id}");
+                        CRUDAbility.UpdateModel(ability, CurrentURL(CharacterModels.Ability) + $"/{ability.Id}");
                         break;
                     case "3":
                         exit = true;
@@ -1298,19 +1242,19 @@ namespace TheBestGameEver
 
         static async void UpdateSkill(int id = 0)
         {
-            CRUD<Skill> SkillObj = new CRUD<Skill>();
             List<Skill> skillList = new List<Skill>();
             bool exit = false;
             while (!exit)
             {
-                Console.WriteLine("1. View Skills");
-                Console.WriteLine("2. Update an Skill");
-                Console.WriteLine("3. Exit");
-                string input = Console.ReadLine();
+                Console.WriteLine("\t1. View Skills");
+                Console.WriteLine("\t2. Update an Skill");
+                Console.WriteLine("\t3. Exit");
+        Console.Write("\t");
+        string input = Console.ReadLine();
                 switch (input)
                 {
                     case "1":
-                        skillList = await SkillObj.GetModels(CurrentURL(CharacterModels.Skill));
+                        skillList = await CRUDSkill.GetModels(CurrentURL(CharacterModels.Skill));
                         foreach (Skill item in skillList)
                         {
                             Console.WriteLine("");
@@ -1318,29 +1262,32 @@ namespace TheBestGameEver
                             Console.Write("Skill ID: ");
                             Console.ForegroundColor = ConsoleColor.White;
                             Console.WriteLine(item.ID);
-                            Console.WriteLine("Skill Name: " + item.Name);
-                            Console.WriteLine("Skill Description: " + item.Desc);
+                            Console.WriteLine("\tSkill Name: " + item.Name);
+                            Console.WriteLine("\tSkill Description: " + item.Desc);
                             Console.WriteLine("");
                         }
                         break;
                     case "2":
-                        Console.WriteLine("Please select the id of the Skill you would like to update: ");
-                        string responseSkill = Console.ReadLine();
+                        Console.WriteLine("\tPlease select the id of the Skill you would like to update: ");
+            Console.Write("\t");
+            string responseSkill = Console.ReadLine();
                         int responseInt = Convert.ToInt32(responseSkill);
-                        skillList = await SkillObj.GetModels(CurrentURL(CharacterModels.Skill), responseInt);
+                        skillList = await CRUDSkill.GetModels(CurrentURL(CharacterModels.Skill), responseInt);
                         Skill Skill = new Skill()
                         {
                             ID = skillList.First().ID,
                             Name = skillList.First().Name,
                             Desc = skillList.First().Desc
                         };
-                        Console.WriteLine("Please update the name for this Skill: ");
-                        string response = Console.ReadLine();
+                        Console.WriteLine("\tPlease update the name for this Skill: ");
+            Console.Write("\t");
+            string response = Console.ReadLine();
                         Skill.Name = response;
-                        Console.WriteLine("Please update the description for this Skill: ");
-                        string response1 = Console.ReadLine();
+                        Console.WriteLine("\tPlease update the description for this Skill: ");
+            Console.Write("\t");
+            string response1 = Console.ReadLine();
                         Skill.Desc = response1;
-                        SkillObj.UpdateModel(Skill, CurrentURL(CharacterModels.Skill) + $"/{Skill.ID}");
+                        CRUDSkill.UpdateModel(Skill, CurrentURL(CharacterModels.Skill) + $"/{Skill.ID}");
                         break;
                     case "3":
                         exit = true;
@@ -1350,50 +1297,53 @@ namespace TheBestGameEver
         }
         static async void UpdateRace(int id = 0)
         {
-            CRUD<Race> RaceObj = new CRUD<Race>();
             List<Race> RaceList = new List<Race>();
             bool exit = false;
             while (!exit)
             {
-                Console.WriteLine("1. View Races");
-                Console.WriteLine("2. Update an Race");
-                Console.WriteLine("3. Exit");
-                string input = Console.ReadLine();
+                Console.WriteLine("\t1. View Races");
+                Console.WriteLine("\t2. Update an Race");
+                Console.WriteLine("\t3. Exit");
+        Console.Write("\t");
+        string input = Console.ReadLine();
                 switch (input)
                 {
                     case "1":
-                        RaceList = await RaceObj.GetModels(CurrentURL(CharacterModels.Race));
+                        RaceList = await CRUDRace.GetModels(CurrentURL(CharacterModels.Race));
                         foreach (Race item in RaceList)
                         {
                             Console.WriteLine("");
                             Console.ForegroundColor = ConsoleColor.Cyan;
-                            Console.Write("Race ID: ");
+                            Console.Write("\tRace ID: ");
                             Console.ForegroundColor = ConsoleColor.White;
                             Console.WriteLine(item.ID);
-                            Console.WriteLine("Race Type: " + item.RaceType);
-                            Console.WriteLine("StatModifier: " + item.StatModifer);
+                            Console.WriteLine("\tRace Type: " + item.RaceType);
+                            Console.WriteLine("\tStatModifier: " + item.StatModifer);
                             Console.WriteLine("");
                         }
                         break;
                     case "2":
                         Console.WriteLine("Please select the id of the Race you would like to update: ");
-                        string responseRace = Console.ReadLine();
+            Console.Write("\t");
+            string responseRace = Console.ReadLine();
                         int responseInt = Convert.ToInt32(responseRace);
-                        RaceList = await RaceObj.GetModels(CurrentURL(CharacterModels.Race), responseInt);
+                        RaceList = await CRUDRace.GetModels(CurrentURL(CharacterModels.Race), responseInt);
                         Race Race = new Race()
                         {
                             ID = RaceList.First().ID,
                             RaceType = RaceList.First().RaceType,
                             StatModifer = RaceList.First().StatModifer
                         };
-                        Console.WriteLine("Please update the race type: ");
-                        string response = Console.ReadLine();
+                        Console.WriteLine("\tPlease update the race type: ");
+            Console.Write("\t");
+            string response = Console.ReadLine();
                         Race.RaceType = response;
-                        Console.WriteLine("Please update the stat modifier for this Race: ");
-                        string response1 = Console.ReadLine();
+                        Console.WriteLine("\tPlease update the stat modifier for this Race: ");
+            Console.Write("\t");
+            string response1 = Console.ReadLine();
                         int statResponse = Convert.ToInt32(response1);
                         Race.StatModifer = statResponse;
-                        RaceObj.UpdateModel(Race, CurrentURL(CharacterModels.Race) + $"/{Race.ID}");
+                        CRUDRace.UpdateModel(Race, CurrentURL(CharacterModels.Race) + $"/{Race.ID}");
                         break;
                     case "3":
                         exit = true;
@@ -1404,50 +1354,53 @@ namespace TheBestGameEver
 
         static async void UpdateClass(int id = 0)
         {
-            CRUD<Class> ClassObj = new CRUD<Class>();
             List<Class> ClassList = new List<Class>();
             bool exit = false;
             while (!exit)
             {
-                Console.WriteLine("1. View Classes");
-                Console.WriteLine("2. Update an Class");
-                Console.WriteLine("3. Exit");
-                string input = Console.ReadLine();
+                Console.WriteLine("\t1. View Classes");
+                Console.WriteLine("\t2. Update an Class");
+                Console.WriteLine("\t3. Exit");
+        Console.Write("\t");
+        string input = Console.ReadLine();
                 switch (input)
                 {
                     case "1":
-                        ClassList = await ClassObj.GetModels(CurrentURL(CharacterModels.Class));
+                        ClassList = await CRUDClass.GetModels(CurrentURL(CharacterModels.Class));
                         foreach (Class item in ClassList)
                         {
                             Console.WriteLine("");
                             Console.ForegroundColor = ConsoleColor.Cyan;
-                            Console.WriteLine("Class ID: ");
+                            Console.WriteLine("\tClass ID: ");
                             Console.ForegroundColor = ConsoleColor.White;
                             Console.WriteLine(item.ID);
-                            Console.WriteLine("Class Name: " + item.ClassName);
-                            Console.WriteLine("StatModifier: " + item.StatModifier);
+                            Console.WriteLine("\tClass Name: " + item.ClassName);
+                            Console.WriteLine("\tStatModifier: " + item.StatModifier);
                             Console.WriteLine("");
                         }
                         break;
                     case "2":
-                        Console.WriteLine("Please select the id of the Class you would like to update: ");
-                        string responseClass = Console.ReadLine();
+                        Console.WriteLine("\tPlease select the id of the Class you would like to update: ");
+            Console.Write("\t");
+            string responseClass = Console.ReadLine();
                         int responseInt = Convert.ToInt32(responseClass);
-                        ClassList = await ClassObj.GetModels(CurrentURL(CharacterModels.Class), responseInt);
+                        ClassList = await CRUDClass.GetModels(CurrentURL(CharacterModels.Class), responseInt);
                         Class Class = new Class()
                         {
                             ID = ClassList.First().ID,
                             ClassName = ClassList.First().ClassName,
                             StatModifier = ClassList.First().StatModifier
                         };
-                        Console.WriteLine("Please update the class name: ");
-                        string response = Console.ReadLine();
+                        Console.WriteLine("\tPlease update the class name: ");
+            Console.Write("\t");
+            string response = Console.ReadLine();
                         Class.ClassName = response;
-                        Console.WriteLine("Please update the stat modifier for this class: ");
-                        string response1 = Console.ReadLine();
+                        Console.WriteLine("\tPlease update the stat modifier for this class: ");
+            Console.Write("\t");
+            string response1 = Console.ReadLine();
                         int statResponse = Convert.ToInt32(response1);
                         Class.StatModifier = statResponse;
-                        ClassObj.UpdateModel(Class, CurrentURL(CharacterModels.Class) + $"/{Class.ID}");
+                        CRUDClass.UpdateModel(Class, CurrentURL(CharacterModels.Class) + $"/{Class.ID}");
                         break;
                     case "3":
                         exit = true;
@@ -1458,38 +1411,39 @@ namespace TheBestGameEver
 
         static async void UpdateCharacter(int id = 0)
         {
-            CRUD<Character> CharacterObj = new CRUD<Character>();
             List<Character> CharacterList = new List<Character>();
             bool exit = false;
             while (!exit)
             {
-                Console.WriteLine("1. View Characters");
-                Console.WriteLine("2. Update an Character");
-                Console.WriteLine("3. Exit");
-                string input = Console.ReadLine();
+                Console.WriteLine("\t1. View Characters");
+                Console.WriteLine("\t2. Update an Character");
+                Console.WriteLine("\t3. Exit");
+        Console.Write("\t");
+        string input = Console.ReadLine();
                 switch (input)
                 {
                     case "1":
-                        CharacterList = await CharacterObj.GetModels(CurrentURL(CharacterModels.Character));
+                        CharacterList = await CRUDCharacter.GetModels(CurrentURL(CharacterModels.Character));
                         foreach (Character item in CharacterList)
                         {
                             Console.WriteLine("");
                             Console.ForegroundColor = ConsoleColor.Cyan;
-                            Console.Write("Character ID: ");
+                            Console.Write("\tCharacter ID: ");
                             Console.ForegroundColor = ConsoleColor.White;
                             Console.WriteLine(item.Id);
-                            Console.WriteLine("Character Name: " + item.Name);
-                            Console.WriteLine("HP: " + item.HP);
-                            Console.WriteLine("Dex: " + item.Dex);
-                            Console.WriteLine("Strength: " + item.Strength);
+                            Console.WriteLine("\tCharacter Name: " + item.Name);
+                            Console.WriteLine("\tHP: " + item.HP);
+                            Console.WriteLine("\tDex: " + item.Dex);
+                            Console.WriteLine("\tStrength: " + item.Strength);
                             Console.WriteLine("");
                         }
                         break;
                     case "2":
-                        Console.WriteLine("Please select the id of the Character you would like to update: ");
-                        string responseCharacter = Console.ReadLine();
+                        Console.WriteLine("\tPlease select the id of the Character you would like to update: ");
+            Console.Write("\t");
+            string responseCharacter = Console.ReadLine();
                         int responseInt = Convert.ToInt32(responseCharacter);
-                        CharacterList = await CharacterObj.GetModels(CurrentURL(CharacterModels.Character), responseInt);
+                        CharacterList = await CRUDCharacter.GetModels(CurrentURL(CharacterModels.Character), responseInt);
                         Character Character = new Character()
                         {
                             Id = CharacterList.First().Id,
@@ -1503,22 +1457,26 @@ namespace TheBestGameEver
                             CharClass = CharacterList.First().CharClass,
                             CharRace = CharacterList.First().CharRace
                         };
-                        Console.WriteLine("Please update the Character name: ");
-                        string response = Console.ReadLine();
+                        Console.WriteLine("\tPlease update the Character name: ");
+            Console.Write("\t");
+            string response = Console.ReadLine();
                         Character.Name = response;
-                        Console.WriteLine("Please update the HP for this Character: ");
-                        string response1 = Console.ReadLine();
+                        Console.WriteLine("\tPlease update the HP for this Character: ");
+            Console.Write("\t");
+            string response1 = Console.ReadLine();
                         int statResponse = Convert.ToInt32(response1);
                         Character.HP = statResponse;
-                        Console.WriteLine("Please update the Dex for this Character: ");
-                        string response2 = Console.ReadLine();
+                        Console.WriteLine("\tPlease update the Dex for this Character: ");
+            Console.Write("\t");
+            string response2 = Console.ReadLine();
                         int statResponse2 = Convert.ToInt32(response2);
                         Character.Dex = statResponse2;
-                        Console.WriteLine("Please update the Strength for this Character: ");
-                        string response3 = Console.ReadLine();
+                        Console.WriteLine("\tPlease update the Strength for this Character: ");
+            Console.Write("\t");
+            string response3 = Console.ReadLine();
                         int statResponse3 = Convert.ToInt32(response3);
                         Character.Strength = statResponse3;
-                        CharacterObj.UpdateModel(Character, CurrentURL(CharacterModels.Character) + $"/{Character.Id}");
+                        CRUDCharacter.UpdateModel(Character, CurrentURL(CharacterModels.Character) + $"/{Character.Id}");
                         break;
                     case "3":
                         exit = true;

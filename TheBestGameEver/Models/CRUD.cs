@@ -100,7 +100,6 @@ namespace TheBestGameEver.Models
       {
         HttpResponseMessage response = null;
         string jsonObj = JsonConvert.SerializeObject(updateObj);
-        Console.WriteLine(jsonObj);
 
         response = client.PutAsync(objRoute, new StringContent(jsonObj, Encoding.UTF8, "application/json")).Result;
         response.EnsureSuccessStatusCode();
