@@ -6207,20 +6207,25 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\zanyg\\.nuget\\packages\\": {}
+    "C:\\Users\\David\\.nuget\\packages\\": {},
+    "C:\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\zanyg\\Source\\Repos\\ItsTheBestGameEver\\TheBestGameEver\\TheBestGameEver.csproj",
+      "projectUniqueName": "C:\\Users\\David\\codefellows\\C#401\\MIdTerm\\ItsTheBestGameEver\\TheBestGameEver\\TheBestGameEver.csproj",
       "projectName": "TheBestGameEver",
-      "projectPath": "C:\\Users\\zanyg\\Source\\Repos\\ItsTheBestGameEver\\TheBestGameEver\\TheBestGameEver.csproj",
-      "packagesPath": "C:\\Users\\zanyg\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\zanyg\\Source\\Repos\\ItsTheBestGameEver\\TheBestGameEver\\obj\\",
+      "projectPath": "C:\\Users\\David\\codefellows\\C#401\\MIdTerm\\ItsTheBestGameEver\\TheBestGameEver\\TheBestGameEver.csproj",
+      "packagesPath": "C:\\Users\\David\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\David\\codefellows\\C#401\\MIdTerm\\ItsTheBestGameEver\\TheBestGameEver\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Microsoft\\Xamarin\\NuGet\\"
+      ],
       "configFilePaths": [
-        "C:\\Users\\zanyg\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\David\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.1"

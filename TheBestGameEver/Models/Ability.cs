@@ -6,10 +6,10 @@ namespace TheBestGameEver.Models
 {
   class Ability
   {
-    public int ID { get; set; }
-    public int RaceID { get; set; }
+    public int Id { get; set; }
+    //public int RaceID { get; set; }
     public string Name { get; set; }
     public string Desc { get; set; }
-    public List<RaceAbility> AbilityList { get; set; }
+    //public List<RaceAbility> AbilityList { get; set; }
   }
 }
