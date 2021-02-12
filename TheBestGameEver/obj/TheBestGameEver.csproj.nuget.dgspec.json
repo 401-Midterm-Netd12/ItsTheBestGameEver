@@ -1,25 +1,21 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\David\\codefellows\\C#401\\MIdTerm\\ItsTheBestGameEver\\TheBestGameEver\\TheBestGameEver.csproj": {}
+    "C:\\Users\\valde\\source\\repos\\ItsTheBestGameEver\\TheBestGameEver\\TheBestGameEver.csproj": {}
   },
   "projects": {
-    "C:\\Users\\David\\codefellows\\C#401\\MIdTerm\\ItsTheBestGameEver\\TheBestGameEver\\TheBestGameEver.csproj": {
+    "C:\\Users\\valde\\source\\repos\\ItsTheBestGameEver\\TheBestGameEver\\TheBestGameEver.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\David\\codefellows\\C#401\\MIdTerm\\ItsTheBestGameEver\\TheBestGameEver\\TheBestGameEver.csproj",
+        "projectUniqueName": "C:\\Users\\valde\\source\\repos\\ItsTheBestGameEver\\TheBestGameEver\\TheBestGameEver.csproj",
         "projectName": "TheBestGameEver",
-        "projectPath": "C:\\Users\\David\\codefellows\\C#401\\MIdTerm\\ItsTheBestGameEver\\TheBestGameEver\\TheBestGameEver.csproj",
-        "packagesPath": "C:\\Users\\David\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\David\\codefellows\\C#401\\MIdTerm\\ItsTheBestGameEver\\TheBestGameEver\\obj\\",
+        "projectPath": "C:\\Users\\valde\\source\\repos\\ItsTheBestGameEver\\TheBestGameEver\\TheBestGameEver.csproj",
+        "packagesPath": "C:\\Users\\valde\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\valde\\source\\repos\\ItsTheBestGameEver\\TheBestGameEver\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Microsoft\\Xamarin\\NuGet\\"
-        ],
         "configFilePaths": [
-          "C:\\Users\\David\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\valde\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
@@ -44,10 +40,6 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "dependencies": {
-            "Microsoft.AspNet.WebApi.Client": {
-              "target": "Package",
-              "version": "[5.2.7, )"
-            },
             "Microsoft.AspNetCore.Identity": {
               "target": "Package",
               "version": "[2.2.0, )"

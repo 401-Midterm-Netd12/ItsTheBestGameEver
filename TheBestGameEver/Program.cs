@@ -32,9 +32,9 @@ namespace TheBestGameEver
             /* === Menu Commands === */
 
             Console.ForegroundColor = ConsoleColor.White;
-            LoginMenu();
+            //LoginMenu();
   
-           //CreateACharacterMenu();
+           CreateACharacterMenu();
 
         }
 
@@ -844,6 +844,7 @@ namespace TheBestGameEver
                 switch (input)
                 {
                     case "1":
+                        Console.WriteLine("");
                         CharacterDisplay(id);
                         break;
                     case "2":
@@ -871,6 +872,7 @@ namespace TheBestGameEver
                 switch (input)
                 {
                     case "1":
+                        Console.WriteLine("");
                         ClassDisplay(id);
                         break;
                     case "2":
@@ -899,7 +901,9 @@ namespace TheBestGameEver
                 switch (input)
                 {
                     case "1":
+                        Console.WriteLine("");
                         SkillDisplay(id);
+                    
                         break;
                     case "2":
                         Console.WriteLine("Please enter an Id to delete: ");
@@ -926,7 +930,9 @@ namespace TheBestGameEver
                 switch (input)
                 {
                     case "1":
+                        Console.WriteLine("");
                         AbilityDisplay(id);
+                    
                         break;
                     case "2":
                         Console.WriteLine("Please enter an Id to delete: ");
@@ -954,7 +960,9 @@ namespace TheBestGameEver
                 switch (input)
                 {
                     case "1":
+                        Console.WriteLine("");
                         RaceDisplay(id);
+                    
                         break;
                     case "2":
                         Console.WriteLine("Please enter an Id to delete: ");
@@ -991,8 +999,11 @@ namespace TheBestGameEver
                         abilitiesList = await abilityObj.GetModels(CurrentURL(CharacterModels.Ability));
                         foreach (Ability item in abilitiesList)
                         {
+                            Console.WriteLine("");
                             Console.WriteLine("Ability Name: " + item.Name);
                             Console.WriteLine("Ability Description: " + item.Desc);
+                            Console.WriteLine("");
+
                         }
                         break;
                     case "2":
@@ -1028,8 +1039,11 @@ namespace TheBestGameEver
                         skillList = await skillObj.GetModels(CurrentURL(CharacterModels.Skill));
                         foreach (Skill item in skillList)
                         {
+                            Console.WriteLine("");
                             Console.WriteLine("Skill Name: " + item.Name);
                             Console.WriteLine("Skill Description: " + item.Desc);
+                            Console.WriteLine("");
+
                         }
                         break;
                     case "2":
@@ -1065,18 +1079,21 @@ namespace TheBestGameEver
                         raceList = await raceObj.GetModels(CurrentURL(CharacterModels.Race));
                         foreach (Race item in raceList)
                         {
+                            Console.WriteLine("");
                             Console.WriteLine("Race: " + item.RaceType);
-                            Console.WriteLine("StatModifier: " + item.StatModifer); // did not see stat modifier
+                            Console.WriteLine("StatModifier: " + item.StatModifer);
+                            Console.WriteLine("");
+
                         }
                         break;
                     case "2":
+                        Console.WriteLine("Please create a race: ");
+                        string response1 = Console.ReadLine();
+                        race.RaceType = response1;
                         Console.WriteLine("Please create a stat modifier(number 1-10): ");
                         string response = Console.ReadLine();
                         int response2 = Convert.ToInt32(response);
                         race.StatModifer = response2;
-                        Console.WriteLine("Please create a race: ");
-                        string response1 = Console.ReadLine();
-                        race.RaceType = response1;
                         raceObj.CreateModel(race, CurrentURL(CharacterModels.Race));
                         break;
                     case "3":
@@ -1103,18 +1120,20 @@ namespace TheBestGameEver
                         ClassList = await classObj.GetModels(CurrentURL(CharacterModels.Class));
                         foreach (Class item in ClassList)
                         {
+                            Console.WriteLine("");
                             Console.WriteLine("Class Name: " + item.ClassName);
                             Console.WriteLine("StatModifier: " + item.StatModifier);
+                            Console.WriteLine("");
                         }
                         break;
                     case "2":
+                        Console.WriteLine("Please create a Class: ");
+                        string response1 = Console.ReadLine();
+                        testClass.ClassName = response1;
                         Console.WriteLine("Please create a stat modifier(number 1-10): ");
                         string response = Console.ReadLine();
                         int response2 = Convert.ToInt32(response);
                         testClass.StatModifier = response2;
-                        Console.WriteLine("Please create a Class: ");
-                        string response1 = Console.ReadLine();
-                        testClass.ClassName = response1;
                         classObj.CreateModel(testClass, CurrentURL(CharacterModels.Class));
                         break;
                     case "3":
@@ -1147,41 +1166,56 @@ namespace TheBestGameEver
                         characterList = await characterObj.GetModels(CurrentURL(CharacterModels.Character));
                         foreach (Character item in characterList)
                         {
+                            Console.WriteLine("");
                             Console.WriteLine("Character Name: " + item.Name);
                             Console.WriteLine("HP: " + item.HP);
                             Console.WriteLine("Dexterity: " + item.Dex);
                             Console.WriteLine("Strength: " + item.Strength);
                             Console.WriteLine($"Created By: {globalUser}");
+                            Console.WriteLine("");
+
                         }
                         break;
                     case "2":
                         raceList = await raceObj.GetModels(CurrentURL(CharacterModels.Race));
                         foreach (Race item in raceList)
                         {
+                            Console.WriteLine("");
                             Console.WriteLine("Race: " + item.RaceType);
-                            Console.WriteLine("RaceID: " + item.ID);
+                            Console.ForegroundColor = ConsoleColor.Cyan;
+                            Console.Write("RaceID: ");
+                            Console.ForegroundColor = ConsoleColor.White;
+                            Console.WriteLine(item.ID);
+                            Console.WriteLine("");
+
                         }
                         break;
                     case "3":
                         classList = await classObj.GetModels(CurrentURL(CharacterModels.Class));
                         foreach (Class item in classList)
                         {
+                            Console.WriteLine("");
                             Console.WriteLine("Class: " + item.ClassName);
-                            Console.WriteLine("ClassID: " + item.ID);
+                            Console.ForegroundColor = ConsoleColor.Cyan;
+                            Console.Write("ClassID: ");
+                            Console.ForegroundColor = ConsoleColor.White;
+                            Console.WriteLine(item.ID);
+                            Console.WriteLine("");
+
                         }
                         break;
                     case "4":
                         Console.WriteLine("Please create a new character name: ");
                         string response = Console.ReadLine();
                         testCharacter.Name = response;
-                        Console.WriteLine("Please select a class ID (hint: you can find this in option 2): ");
-                        string response1 = Console.ReadLine();
-                        int responseToInt = Convert.ToInt32(response1);
-                        testCharacter.ClassId = responseToInt;
                         Console.WriteLine("Please select a race ID (hint: you can find this in option 3): ");
                         string response2 = Console.ReadLine();
                         int responseToInt2 = Convert.ToInt32(response2);
                         testCharacter.RaceId = responseToInt2;
+                        Console.WriteLine("Please select a class ID (hint: you can find this in option 2): ");
+                        string response1 = Console.ReadLine();
+                        int responseToInt = Convert.ToInt32(response1);
+                        testCharacter.ClassId = responseToInt;
                         Console.WriteLine("Please select an HP (enter a number between 1-10): ");
                         string response3 = Console.ReadLine();
                         int responseToInt3 = Convert.ToInt32(response3);
@@ -1226,7 +1260,11 @@ namespace TheBestGameEver
                         abilitiesList = await abilityObj.GetModels(CurrentURL(CharacterModels.Ability));
                         foreach (Ability item in abilitiesList)
                         {
-                            Console.WriteLine("Ability ID: " + item.Id);
+                            Console.WriteLine("");
+                            Console.ForegroundColor = ConsoleColor.Cyan;
+                            Console.Write("Ability ID: ");
+                            Console.ForegroundColor = ConsoleColor.White;
+                            Console.WriteLine(item.Id);
                             Console.WriteLine("Ability Name: " + item.Name);
                             Console.WriteLine("Ability Description: " + item.Desc);
                             Console.WriteLine("");
@@ -1275,7 +1313,11 @@ namespace TheBestGameEver
                         skillList = await SkillObj.GetModels(CurrentURL(CharacterModels.Skill));
                         foreach (Skill item in skillList)
                         {
-                            Console.WriteLine("Skill ID: " + item.ID);
+                            Console.WriteLine("");
+                            Console.ForegroundColor = ConsoleColor.Cyan;
+                            Console.Write("Skill ID: ");
+                            Console.ForegroundColor = ConsoleColor.White;
+                            Console.WriteLine(item.ID);
                             Console.WriteLine("Skill Name: " + item.Name);
                             Console.WriteLine("Skill Description: " + item.Desc);
                             Console.WriteLine("");
@@ -1323,7 +1365,11 @@ namespace TheBestGameEver
                         RaceList = await RaceObj.GetModels(CurrentURL(CharacterModels.Race));
                         foreach (Race item in RaceList)
                         {
-                            Console.WriteLine("Race ID: " + item.ID);
+                            Console.WriteLine("");
+                            Console.ForegroundColor = ConsoleColor.Cyan;
+                            Console.Write("Race ID: ");
+                            Console.ForegroundColor = ConsoleColor.White;
+                            Console.WriteLine(item.ID);
                             Console.WriteLine("Race Type: " + item.RaceType);
                             Console.WriteLine("StatModifier: " + item.StatModifer);
                             Console.WriteLine("");
@@ -1373,7 +1419,11 @@ namespace TheBestGameEver
                         ClassList = await ClassObj.GetModels(CurrentURL(CharacterModels.Class));
                         foreach (Class item in ClassList)
                         {
-                            Console.WriteLine("Class ID: " + item.ID);
+                            Console.WriteLine("");
+                            Console.ForegroundColor = ConsoleColor.Cyan;
+                            Console.WriteLine("Class ID: ");
+                            Console.ForegroundColor = ConsoleColor.White;
+                            Console.WriteLine(item.ID);
                             Console.WriteLine("Class Name: " + item.ClassName);
                             Console.WriteLine("StatModifier: " + item.StatModifier);
                             Console.WriteLine("");
@@ -1423,7 +1473,11 @@ namespace TheBestGameEver
                         CharacterList = await CharacterObj.GetModels(CurrentURL(CharacterModels.Character));
                         foreach (Character item in CharacterList)
                         {
-                            Console.WriteLine("Character ID: " + item.Id);
+                            Console.WriteLine("");
+                            Console.ForegroundColor = ConsoleColor.Cyan;
+                            Console.Write("Character ID: ");
+                            Console.ForegroundColor = ConsoleColor.White;
+                            Console.WriteLine(item.Id);
                             Console.WriteLine("Character Name: " + item.Name);
                             Console.WriteLine("HP: " + item.HP);
                             Console.WriteLine("Dex: " + item.Dex);
